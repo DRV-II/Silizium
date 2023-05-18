@@ -121,8 +121,57 @@ async function checkKey(id) {
     }
 }
 
+async function getAll() {
+    try {
+        const [rows] = await pool.query(
+        `SELECT employees.uid AS id, name, org, work_location, certification, issue_date, type, IF(employees.uid IN (SELECT employeeUid FROM bookmarks), 1, 0) AS bookmarked 
+        FROM employees INNER JOIN certifications 
+        ON employees.uid = certifications.uid`);
+        return rows;
+    }
+    catch(error) {
+        console.log(error);
+    }
+}
+
+async function bookmark(id, eid) {
+    try {
+        const [rows] = await pool.query(
+        `INSERT INTO bookmarks (userUid, employeeUid)
+        VALUES (?, ?)`, [id, eid]);
+        return rows;
+    }
+    catch(error) {
+        console.log(error);
+    }
+}
+
+async function getBookmark() {
+    try {
+        const [rows] = await pool.query(
+        `SELECT employees.uid AS id, name, org, work_location, certification, issue_date, type
+        FROM employees INNER JOIN certifications 
+        ON employees.uid = certifications.uid
+        WHERE employees.uid IN (SELECT employeeUid FROM bookmarks)`);
+        return rows;
+    }
+    catch(error) {
+        console.log(error);
+    }
+}
+
+async function deleteBookmark(id) {
+    try {
+        const [rows] = await pool.query(
+        `DELETE FROM bookmarks WHERE employeeUid=?`, [id]);
+        return rows;
+    }
+    catch(error) {
+        console.log(error);
+    }
+}
 
 //getUsers().then(console.log);
 //getUser('1234567890QW').then(console.log);
 
-module.exports = {getUser, getUsers, setUser, deleteUser, activeUser, search, saveKey, checkKey};
+module.exports = {getUser, getUsers, setUser, deleteUser, activeUser, search, saveKey, checkKey, getAll, bookmark, getBookmark, deleteBookmark};

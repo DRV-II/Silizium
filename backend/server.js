@@ -15,7 +15,7 @@ require('dotenv').config();
 // Database queries
 // ================================================================================
 
-const {getUser, getUsers, setUser, deleteUser, activeUser, search, saveKey, checkKey} = require('./database.js');
+const {getUser, getUsers, setUser, deleteUser, activeUser, search, saveKey, checkKey, getAll, bookmark, getBookmark, deleteBookmark} = require('./database.js');
 
 // =================================================
 // Encryption
@@ -299,7 +299,7 @@ app.post('/register', userLoggedIn, ensureSecondFactor, async (req, res) => {
                 if(user){
                     console.log("We get user");
                     if(user.role === process.env.USER_DELETED){
-                        activeUser(req.body.username, req.body.password).then((success)=>{
+                        activeUser(req.body.username, password).then((success)=>{
                             if(success){
                                 res.status(201).send({ response: 'Created'});
                             }
@@ -410,6 +410,64 @@ app.get('/users', userLoggedIn, ensureSecondFactor, async (req,res) => {
 // Test
 app.get('/', (req, res) => {
     res.send('Hello World!')
+});
+
+// Get All
+app.get('/general', userLoggedIn, ensureSecondFactor, async (req,res) => {
+    try {
+        res.status(200).send(await getAll());
+    }
+    catch(error){
+        console.log(error);
+        res.status(500).send({ response: 'Internal Server Error' });
+    }
+});
+
+// Get Bookmarks
+app.get('/get-bookmarks', userLoggedIn, ensureSecondFactor, async (req,res) => {
+    try {
+        res.status(200).send(await getBookmark());
+    }
+    catch(error){
+        console.log(error);
+        res.status(500).send({ response: 'Internal Server Error' });
+    }
+});
+
+// Uncheck bookmark
+app.delete('/unbook', userLoggedIn, ensureSecondFactor, async (req,res) => {
+    try {
+        deleteBookmark(req.body.employee).then((results) =>{
+            if (results) {
+                res.status(200).send({ response: 'Ok' });
+            }
+            else {
+                res.status(500).send({ response: 'Internal Server Error' });
+            }
+        });
+    }
+    catch(error){
+        console.log(error);
+        res.status(500).send({ response: 'Internal Server Error' });
+    }
+});
+
+// Check bookmark
+app.post('/check', userLoggedIn, ensureSecondFactor, async (req,res) => {
+    try {
+        bookmark(req.user.uid, req.body.employee).then((results) =>{
+            if (results) {
+                res.status(200).send({ response: 'Ok' });
+            }
+            else {
+                res.status(500).send({ response: 'Internal Server Error' });
+            }
+        });
+    }
+    catch(error){
+        console.log(error);
+        res.status(500).send({ response: 'Internal Server Error' });
+    }
 });
 
 // Port listening
