@@ -45,3 +45,11 @@
     border-right: 2px solid #8D8D8D;
     height: 100vh;
 }
+
+.active .bee,
+.active .home,
+.active .policy,
+.active .table1,
+.active .logout {
+  color: #FFFF; /* Aquí puedes establecer el color deseado para el ícono activo */
+}

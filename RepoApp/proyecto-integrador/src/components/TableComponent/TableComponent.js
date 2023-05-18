@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import './TableComponent.css';
 import { Certifications } from '../../data/Certifications';
-import {Bookmark} from '@carbon/icons-react';
+import {Bookmark, BookmarkFilled} from '@carbon/icons-react';
 
 
 const TableComponent = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [bookmarks, setBookmarks] = useState([]);
 
   // Determine the total number of pages based on the items per page value and the length of the array
   const totalPages = Math.ceil(Certifications.length / itemsPerPage);
@@ -31,7 +32,13 @@ const TableComponent = () => {
     setCurrentPage(1); // Reset the current page number when changing the items per page value
   };
 
-  
+  const handleBookmarkClick = (id) => {
+    if (bookmarks.includes(id)) {
+      setBookmarks(bookmarks.filter((bookmarkId) => bookmarkId !== id));
+    } else {
+      setBookmarks([...bookmarks, id]);
+    }
+  };
 
   return (
     <div className='tablecomponent-container'>
@@ -51,7 +58,9 @@ const TableComponent = () => {
           <tbody>
             {Certifications.slice(startIndex, endIndex).map(({ Id, org, work_location, certification, issue_date, type }) => (
               <tr key={Id}>
-                <td><Bookmark size="20"/></td>
+                <td onClick={() => handleBookmarkClick(Id)}>
+                  {bookmarks.includes(Id) ? <BookmarkFilled size="20" fill="#F1C21B"/> : <Bookmark size="20"/>}
+                </td>
                 <td>{Id}</td>
                 <td>{org}</td>
                 <td>{work_location}</td>
@@ -59,7 +68,7 @@ const TableComponent = () => {
                 <td>{issue_date}</td>
                 <td>{type}</td>
               </tr>
-            ))}
+          ))}
           </tbody>
         </table>
       </div>
