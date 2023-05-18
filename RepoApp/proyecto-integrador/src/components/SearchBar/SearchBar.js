@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import './SearchBar.css';
+import { Search } from '@carbon/icons-react';
 
 function SearchBar(props) {
   const [searchTerm, setSearchTerm] = useState('');
@@ -13,9 +15,20 @@ function SearchBar(props) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="text" value={searchTerm} onChange={handleInputChange} placeholder="Search..." />
-      <button type="submit">Search</button>
+    <form className="search-form" onSubmit={handleSubmit}>
+      <div className="search-container">
+      <button type="submit" className="search-button">
+        <Search className="search-icon"/>
+        </button>
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={handleInputChange}
+          placeholder="Search employee or certification"
+          className="search-input"
+        />
+        <div className="search-line"></div>
+      </div>
     </form>
   );
 }

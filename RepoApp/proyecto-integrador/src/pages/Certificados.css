@@ -1,6 +1,7 @@
 .certificados-container{
     display: flex;
     background-color: #393939;
+    overflow: hidden;
 }
 
 .right-sidecert{
