@@ -15,7 +15,7 @@ require('dotenv').config();
 // Database queries
 // ================================================================================
 
-const {getUser, getUsers, setUser, deleteUser, activeUser, search, saveKey, checkKey, getAll, bookmark, getBookmark, deleteBookmark} = require('./database.js');
+const {getUser, getUsers, setUser, deleteUser, activeUser, search, saveKey, checkKey, getAll, bookmark, getBookmark, deleteBookmark, getCertificationsFromUser} = require('./database.js');
 
 // =================================================
 // Encryption
@@ -366,7 +366,7 @@ app.post('/delete', userLoggedIn, ensureSecondFactor, async (req, res) => {
 app.post('/search', userLoggedIn, ensureSecondFactor, async (req,res) => {
     try {
         const searchInput = '%' + req.body.searchText + '%';
-        search(searchInput).then((results)=>{
+        search(req.user.uid , searchInput).then((results)=>{
             if (results) {
                 res.status(200).send(results);
             }
@@ -415,7 +415,7 @@ app.get('/', (req, res) => {
 // Get All
 app.get('/general', userLoggedIn, ensureSecondFactor, async (req,res) => {
     try {
-        res.status(200).send(await getAll());
+        res.status(200).send(await getAll(req.user.uid));
     }
     catch(error){
         console.log(error);
@@ -426,7 +426,7 @@ app.get('/general', userLoggedIn, ensureSecondFactor, async (req,res) => {
 // Get Bookmarks
 app.get('/get-bookmarks', userLoggedIn, ensureSecondFactor, async (req,res) => {
     try {
-        res.status(200).send(await getBookmark());
+        res.status(200).send(await getBookmark(req.user.uid));
     }
     catch(error){
         console.log(error);
@@ -437,7 +437,7 @@ app.get('/get-bookmarks', userLoggedIn, ensureSecondFactor, async (req,res) => {
 // Uncheck bookmark
 app.delete('/unbook', userLoggedIn, ensureSecondFactor, async (req,res) => {
     try {
-        deleteBookmark(req.body.employee).then((results) =>{
+        deleteBookmark(req.body.employee, req.user.uid, req.body.certificate).then((results) =>{
             if (results) {
                 res.status(200).send({ response: 'Ok' });
             }
@@ -455,7 +455,7 @@ app.delete('/unbook', userLoggedIn, ensureSecondFactor, async (req,res) => {
 // Check bookmark
 app.post('/check', userLoggedIn, ensureSecondFactor, async (req,res) => {
     try {
-        bookmark(req.user.uid, req.body.employee).then((results) =>{
+        bookmark(req.user.uid, req.body.employee, req.body.certificate).then((results) =>{
             if (results) {
                 res.status(200).send({ response: 'Ok' });
             }
@@ -463,6 +463,17 @@ app.post('/check', userLoggedIn, ensureSecondFactor, async (req,res) => {
                 res.status(500).send({ response: 'Internal Server Error' });
             }
         });
+    }
+    catch(error){
+        console.log(error);
+        res.status(500).send({ response: 'Internal Server Error' });
+    }
+});
+
+// Get All Certifications from Users
+app.get('/certifications', userLoggedIn, ensureSecondFactor, async (req,res) => {
+    try {
+        res.status(200).send(await getCertificationsFromUser(req.user.uid, req.body.employee));
     }
     catch(error){
         console.log(error);
