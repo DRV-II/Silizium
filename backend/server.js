@@ -9,6 +9,7 @@ const session = require('express-session');
 const passportLocal = require('passport-local');
 const speakeasy = require("speakeasy");
 const qrCode = require("qrcode");
+const cors = require("cors");
 require('dotenv').config();
 
 // =================================================
@@ -33,6 +34,11 @@ const port = 5000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.PARSER_SECRET));
+
+app.use(cors({
+    origin: "http://localhost:3000",
+    credentials: true
+}));
 
 app.use(session({
     secret: process.env.SESSION_SECRET,
@@ -415,6 +421,7 @@ app.get('/', (req, res) => {
 // Get All
 app.get('/general', userLoggedIn, ensureSecondFactor, async (req,res) => {
     try {
+        console.log("general");
         res.status(200).send(await getAll(req.user.uid));
     }
     catch(error){
