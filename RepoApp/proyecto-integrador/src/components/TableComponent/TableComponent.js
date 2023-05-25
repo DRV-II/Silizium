@@ -4,7 +4,8 @@ import './TableComponent.css';
 import {Bookmark, BookmarkFilled} from '@carbon/icons-react';
 import axios from 'axios';
 
-const TableComponent = () => {
+const TableComponent = (props) => {
+  const { urlCert } = props;
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [bookmarks, setBookmarks] = useState([]);
@@ -14,7 +15,7 @@ const TableComponent = () => {
     axios({
       method: "GET",
       withCredentials: true,
-      url: "http://localhost:5000/general",
+      url: urlCert,
     }).then((res) => {
       setData(res.data);
       console.log(res.data);

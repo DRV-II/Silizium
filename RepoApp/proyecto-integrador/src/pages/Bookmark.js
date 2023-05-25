@@ -22,7 +22,7 @@ const Bookmark = () => {
           <div>   
           </div>
         </div>
-        <TableComponent/>  
+        <TableComponent urlCert="http://localhost:5000/get-bookmarks"/>  
         </div>
       </div>
     </div>
