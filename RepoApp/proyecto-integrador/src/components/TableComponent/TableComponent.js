@@ -1,13 +1,27 @@
 import React, { useState } from 'react';
 import './TableComponent.css';
-import { Certifications } from '../../data/Certifications';
+//import { Certifications } from '../../data/Certifications';
 import {Bookmark, BookmarkFilled} from '@carbon/icons-react';
+import axios from 'axios';
 
 const TableComponent = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [bookmarks, setBookmarks] = useState([]);
+  const [data, setData] = useState([{}]);
 
+  const getCertificationsTable = () => {
+    axios({
+      method: "GET",
+      withCredentials: true,
+      url: "http://localhost:5000/general",
+    }).then((res) => {
+      setData(res.data);
+      console.log(res.data);
+    });
+  };
+  getCertificationsTable();
+  var Certifications = data;
   // Determine the total number of pages based on the items per page value and the length of the array
   const totalPages = Math.ceil(Certifications.length / itemsPerPage);
 
@@ -55,12 +69,12 @@ const TableComponent = () => {
             </tr>
           </thead>
           <tbody>
-            {Certifications.slice(startIndex, endIndex).map(({ Id, org, work_location, certification, issue_date, type }) => (
-              <tr key={Id}>
-                <td onClick={() => handleBookmarkClick(Id)}>
-                  {bookmarks.includes(Id) ? <BookmarkFilled size="20" fill="#F1C21B"/> : <Bookmark size="20"/>}
+            {Certifications.slice(startIndex, endIndex).map(({ id, org, work_location, certification, issue_date, type }) => (
+              <tr key={id}>
+                <td onClick={() => handleBookmarkClick(id)}>
+                  {bookmarks.includes(id) ? <BookmarkFilled size="20" fill="#F1C21B"/> : <Bookmark size="20"/>}
                 </td>
-                <td>{Id}</td>
+                <td>{id}</td>
                 <td>{org}</td>
                 <td>{work_location}</td>
                 <td>{certification}</td>

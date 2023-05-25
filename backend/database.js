@@ -50,7 +50,7 @@ async function setUser(id, password) {
 async function deleteUser(id){
     try{
         const [rows] = await pool.query(
-            `UPDATE users SET role = 'inactive' WHERE uid = ?`, 
+            `UPDATE users SET role = 'inactive', secret='NULL', qrurl='NULL', verified='no' WHERE uid = ?`, // Reset double auth
             [id]
         );
         return rows;
@@ -73,10 +73,10 @@ async function activeUser(id, password){
     }
 }
 
-async function search(searchText){
+async function search(id, searchText){
     try {
         const [rows] = await pool.query(
-            `SELECT employees.uid AS id, name, org, work_location, certification, issue_date, type 
+            `SELECT employees.uid AS id, name, org, work_location, certification, issue_date, type, IF(certification IN (SELECT certificate FROM bookmarks WHERE userUid = ?) AND employees.uid IN (SELECT employeeUid FROM bookmarks WHERE userUid = ?), 1, 0) AS bookmarked
             FROM employees INNER JOIN certifications 
             ON employees.uid = certifications.uid 
             WHERE employees.uid LIKE ? 
@@ -86,7 +86,7 @@ async function search(searchText){
             OR certification LIKE ? 
             OR issue_date LIKE ? 
             OR type LIKE ?`,
-            [searchText, searchText, searchText, searchText, searchText, searchText, searchText]
+            [id, id, searchText, searchText, searchText, searchText, searchText, searchText, searchText]
         );
         return rows;
     }
@@ -121,12 +121,12 @@ async function checkKey(id) {
     }
 }
 
-async function getAll() {
+async function getAll(id) {
     try {
         const [rows] = await pool.query(
-        `SELECT employees.uid AS id, name, org, work_location, certification, issue_date, type, IF(employees.uid IN (SELECT employeeUid FROM bookmarks), 1, 0) AS bookmarked 
+        `SELECT employees.uid AS id, name, org, work_location, certification, issue_date, type, IF(certification IN (SELECT certificate FROM bookmarks WHERE userUid = ?) AND employees.uid IN (SELECT employeeUid FROM bookmarks WHERE userUid = ?), 1, 0) AS bookmarked 
         FROM employees INNER JOIN certifications 
-        ON employees.uid = certifications.uid`);
+        ON employees.uid = certifications.uid`, [id, id]);
         return rows;
     }
     catch(error) {
@@ -134,11 +134,11 @@ async function getAll() {
     }
 }
 
-async function bookmark(id, eid) {
+async function bookmark(id, eid, cert) {
     try {
         const [rows] = await pool.query(
-        `INSERT INTO bookmarks (userUid, employeeUid)
-        VALUES (?, ?)`, [id, eid]);
+        `INSERT INTO bookmarks (userUid, employeeUid, certificate)
+        VALUES (?, ?, ?)`, [id, eid, cert]);
         return rows;
     }
     catch(error) {
@@ -146,13 +146,14 @@ async function bookmark(id, eid) {
     }
 }
 
-async function getBookmark() {
+async function getBookmark(id) {
     try {
         const [rows] = await pool.query(
         `SELECT employees.uid AS id, name, org, work_location, certification, issue_date, type
         FROM employees INNER JOIN certifications 
         ON employees.uid = certifications.uid
-        WHERE employees.uid IN (SELECT employeeUid FROM bookmarks)`);
+        WHERE certification IN (SELECT certificate FROM bookmarks WHERE userUid = ?)
+        AND employees.uid IN (SELECT employeeUid FROM bookmarks WHERE userUid = ?)`, [id,id]);
         return rows;
     }
     catch(error) {
@@ -160,10 +161,25 @@ async function getBookmark() {
     }
 }
 
-async function deleteBookmark(id) {
+async function deleteBookmark(id, uid, cert) {
     try {
         const [rows] = await pool.query(
-        `DELETE FROM bookmarks WHERE employeeUid=?`, [id]);
+        `DELETE FROM bookmarks WHERE employeeUid=? AND userUid=? AND certificate=?`, [id, uid, cert]); // AND USER ID
+        return rows;
+    }
+    catch(error) {
+        console.log(error);
+    }
+}
+
+// klnkgyvcvj
+async function getCertificationsFromUser(id, eid) {
+    try {
+        const [rows] = await pool.query(
+        `SELECT employees.uid AS id, name, org, work_location, certification, issue_date, type, IF(certification IN (SELECT certificate FROM bookmarks WHERE userUid = ?) AND employees.uid IN (SELECT employeeUid FROM bookmarks WHERE userUid = ?), 1, 0) AS bookmarked
+        FROM employees INNER JOIN certifications 
+        ON employees.uid = certifications.uid
+        WHERE employees.uid = ?`, [id, id, eid]);
         return rows;
     }
     catch(error) {
@@ -174,4 +190,4 @@ async function deleteBookmark(id) {
 //getUsers().then(console.log);
 //getUser('1234567890QW').then(console.log);
 
-module.exports = {getUser, getUsers, setUser, deleteUser, activeUser, search, saveKey, checkKey, getAll, bookmark, getBookmark, deleteBookmark};
+module.exports = {getUser, getUsers, setUser, deleteUser, activeUser, search, saveKey, checkKey, getAll, bookmark, getBookmark, deleteBookmark, getCertificationsFromUser};
