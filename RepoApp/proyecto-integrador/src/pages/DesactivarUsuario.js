@@ -10,7 +10,7 @@ const DesactivarUsuario = () => {
         <form method='POST'>
         <label htmlFor="id"></label>
         <input type="text" name="id" id="id" className="id" placeholder="  ID"/><br></br>
-        <button type="submit" className="button">Register</button>
+        <button type="submit" className="button">Deactivate</button>
       </form>
       </div>
 
