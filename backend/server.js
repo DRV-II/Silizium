@@ -171,9 +171,11 @@ app.post('/tfsetup', userLoggedIn, ensureSecondFactor, function(req, res){
             if (user.secret != process.env.USER_NULL && user.verified === process.env.USER_VERIFIED) {
                 qrCode.toDataURL(user.qrurl, function(err, data) {
                     if (err) {
+                        console.log("No proporciona");
                         res.status(500).send({ response: 'Internal Server Error' });
                     }
                     else {
+                        console.log("Si proporciona");
                         res.status(200).send({ response: "Ok", qrCode: data, secret: user.secret});
                     }
                 });
@@ -187,14 +189,17 @@ app.post('/tfsetup', userLoggedIn, ensureSecondFactor, function(req, res){
                 
                 qrCode.toDataURL(secret.otpauth_url, function(err, data) {
                     if (err) {
+                        console.log("No hace setup");
                         res.status(500).send({ response: 'Internal Server Error' });
                     }
                     else {
                         saveKey(req.user.uid, secret.base32, secret.otpauth_url, process.env.USER_NOT_VERIFIED).then((success) => {
                             if (success) { 
+                                console.log("Hace setup");
                                 res.status(200).send({ response: "Ok", qrCode: data, secret: secret.base32});
                             }
                             else {
+                                console.log("No hace setup");
                                 res.status(500).send({ response: "Internal Server Error" });
                             }
                         });
