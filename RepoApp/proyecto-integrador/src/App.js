@@ -9,6 +9,8 @@ import EmpleadoPage from './pages/EmpleadoPage';
 import QR from './pages/QR';
 import TokenPage from './pages/TokenPage';
 import TokenPage2 from './pages/TokenPage2';
+import RegistrarUsuario from './pages/RegistrarUsuario';
+import DesactivarUsuario from './pages/DesactivarUsuario';
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
           <Route path="/QR" element={<QR/>} />
           <Route path="/TokenPage" element={<TokenPage/>} />
           <Route path="/TokenPage2" element={<TokenPage2/>} />
+          <Route path="/UserRegistration" element={<RegistrarUsuario/>} />
+          <Route path="/DeactivateUser" element={<DesactivarUsuario/>} />
         </Routes>
       </BrowserRouter>
     </div>
