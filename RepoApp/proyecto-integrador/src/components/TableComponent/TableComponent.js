@@ -21,7 +21,48 @@ const TableComponent = (props) => {
       console.log(res.data);
     });
   };
-  getCertificationsTable();
+  // Funcion
+  /*
+  "employee": "000134781IBM",
+    "certificate": "Big Data Foundations - Level 1"
+  */
+
+  // New Bookmark
+  const newBookmark = (id, certification) => {
+    axios({
+      method: "POST",
+      data: {
+        employee: id,
+        certificate: certification,
+      },
+      withCredentials: true,
+      url: "http://localhost:5000/check",
+    }).then((res) => {
+      //setData(res.data);
+      console.log(res.data);
+    });
+  };
+
+  // Delete Bookmark
+
+  const deleteBookmark = (id, certification) => {
+    axios({
+      method: "DELETE",
+      data: {
+        employee: id,
+        certificate: certification,
+      },
+      withCredentials: true,
+      url: "http://localhost:5000/unbook",
+    }).then((res) => {
+      //setData(res.data);
+      console.log(res.data);
+    });
+  };
+
+  // Setea data
+  getCertificationsTable(); // Esta función se llama cuando no hay texto en el search bar
+  // Se asigna valores de Certificaciones
   var Certifications = data;
   // Determine the total number of pages based on the items per page value and the length of the array
   const totalPages = Math.ceil(Certifications.length / itemsPerPage);

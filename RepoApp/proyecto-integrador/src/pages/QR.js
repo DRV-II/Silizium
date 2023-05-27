@@ -17,7 +17,7 @@ const QR = () => {
       console.log(res.data);
     });
   };
-  authSetup();
+  authSetup(); // Solo llamalo una vez
   //var dataQr = data;
   const qrString = data.qrCode;
   const secret = data.secret;

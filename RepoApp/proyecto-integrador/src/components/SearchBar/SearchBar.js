@@ -1,9 +1,26 @@
 import React, { useState } from 'react';
 import './SearchBar.css';
 import { Search } from '@carbon/icons-react';
+import axios from 'axios';
 
 function SearchBar(props) {
   const [searchTerm, setSearchTerm] = useState('');
+  const [data, setData] = useState([{}]); // Lista de JSON resultado de busqueda
+
+  // Función de search
+  const search = (text) => {
+    axios({
+      method: "POST",
+      data: {
+        searchText: text,
+      },
+      withCredentials: true,
+      url: "http://localhost:5000/search",
+    }).then((res) => {
+      setData(res.data);
+      console.log(res.data);
+    });
+  };
 
   function handleInputChange(event) {
     setSearchTerm(event.target.value);
