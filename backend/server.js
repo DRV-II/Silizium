@@ -1,7 +1,8 @@
 // =================================================
 // Requirements
 // ================================================================================
-
+const { createClient } = require('redis');
+const SchemaFieldTypes = require('redis');
 const express = require('express');
 const passport = require('passport');
 const cookieParser = require('cookie-parser');
@@ -17,6 +18,66 @@ require('dotenv').config();
 // ================================================================================
 
 const {getUser, getUsers, setUser, deleteUser, activeUser, search, saveKey, checkKey, getAll, bookmark, getBookmark, deleteBookmark, getCertificationsFromUser} = require('./database.js');
+
+// Redis -----------------------
+const client = createClient();
+
+client.on('error', err => console.log('Redis Client Error', err));
+
+async function redisInitial() {
+    await client.connect();
+
+    try {
+        await client.ft.create('idx:employees', {
+            '$.id': {
+                type: SchemaFieldTypes.TEXT,
+                SORTABLE: true
+            },
+            '$.name': {
+                type: SchemaFieldTypes.TEXT,
+                AS: 'name'
+            },
+            '$.org': {
+                type: SchemaFieldTypes.TEXT,
+                AS: 'org'
+            },
+            '$.work_location': {
+                type: SchemaFieldTypes.TEXT,
+                AS: 'work_location'
+            },
+            '$.certification': {
+                type: SchemaFieldTypes.TEXT,
+                AS: 'certification'
+            },
+            '$.issue_date': {
+                type: SchemaFieldTypes.TEXT,
+                AS: 'issue_date'
+            },
+            '$.type': {
+                type: SchemaFieldTypes.TEXT,
+                AS: 'type'
+            },
+            '$.bookmarked': {
+                type: SchemaFieldTypes.TEXT,
+                AS: 'bookmarked'
+            }
+        }, {
+            ON: 'JSON',
+            PREFIX: 'employee:'
+        });
+    } catch (e) {
+        if (e.message === 'Index already exists') {
+            console.log('Index exists already, skipped creation.');
+        } else {
+            // Something went wrong, perhaps RediSearch isn't installed...
+            console.error(e);
+            process.exit(1);
+        }
+    }
+}
+
+redisInitial();
+// -------------------------------
 
 // =================================================
 // Encryption
@@ -274,8 +335,28 @@ app.post('/login', (req, res, next) => {
         return next(); // We continue if not
     }
 }, passport.authenticate('local'),
-function(req, res) {
-  res.status(200).send({ response: 'Ok' }); // We return Ok if we log in
+async function(req, res) {
+  // Redis Initialization
+  await getAll(req.user.uid).then(async (results) => {
+    if (results){
+        for (let i = 0; i < results.length; i++) {
+            await Promise.all([
+                client.json.set(`employee:${i+1}`, '$', results[i])
+            ]);
+        }
+
+        let resultYei = await client.ft.search(
+            "idx:employees",
+            "000134781IBM @certification:'Big Data Foundations - Level 1'"
+        );
+        console.log(JSON.stringify(resultYei, null, 2));
+        res.status(200).send({ response: 'Ok' }); // We return Ok if we log in
+    }
+    else {
+        res.status(200).send({ response: 'Ok' }); // We return Ok if we log in
+    }
+  });
+  // -------------
 });
 
 // Logout

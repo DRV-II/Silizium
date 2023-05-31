@@ -5,8 +5,9 @@ export const Certifications = [
         org: "Finance and operations",
         work_location: "Guadalajara, JAL, Mexico",
         certification: "Big Data Specialist",
-        issue_date: "1899-11-30",
-        type: "badge"
+        issue_date: "1899-11-30-ajshudasoahaioajsk",
+        type: "badge",
+        bookmarked: "1"
     },
     {
         Id: "1234567890AB",
