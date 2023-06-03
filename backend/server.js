@@ -1,8 +1,7 @@
 // =================================================
 // Requirements
 // ================================================================================
-const { createClient } = require('redis');
-const SchemaFieldTypes = require('redis');
+const { createClient } = require("redis");
 const express = require('express');
 const passport = require('passport');
 const cookieParser = require('cookie-parser');
@@ -11,6 +10,7 @@ const passportLocal = require('passport-local');
 const speakeasy = require("speakeasy");
 const qrCode = require("qrcode");
 const cors = require("cors");
+const responseTime = require("response-time");
 require('dotenv').config();
 
 // =================================================
@@ -21,62 +21,14 @@ const {getUser, getUsers, setUser, deleteUser, activeUser, search, saveKey, chec
 
 // Redis -----------------------
 const client = createClient();
+// Connecting to redis
+async function connectRedis() {
 
-client.on('error', err => console.log('Redis Client Error', err));
+    client.on('error', err => console.log('Redis Client Error', err));
 
-async function redisInitial() {
     await client.connect();
-
-    try {
-        await client.ft.create('idx:employees', {
-            '$.id': {
-                type: SchemaFieldTypes.TEXT,
-                SORTABLE: true
-            },
-            '$.name': {
-                type: SchemaFieldTypes.TEXT,
-                AS: 'name'
-            },
-            '$.org': {
-                type: SchemaFieldTypes.TEXT,
-                AS: 'org'
-            },
-            '$.work_location': {
-                type: SchemaFieldTypes.TEXT,
-                AS: 'work_location'
-            },
-            '$.certification': {
-                type: SchemaFieldTypes.TEXT,
-                AS: 'certification'
-            },
-            '$.issue_date': {
-                type: SchemaFieldTypes.TEXT,
-                AS: 'issue_date'
-            },
-            '$.type': {
-                type: SchemaFieldTypes.TEXT,
-                AS: 'type'
-            },
-            '$.bookmarked': {
-                type: SchemaFieldTypes.TEXT,
-                AS: 'bookmarked'
-            }
-        }, {
-            ON: 'JSON',
-            PREFIX: 'employee:'
-        });
-    } catch (e) {
-        if (e.message === 'Index already exists') {
-            console.log('Index exists already, skipped creation.');
-        } else {
-            // Something went wrong, perhaps RediSearch isn't installed...
-            console.error(e);
-            process.exit(1);
-        }
-    }
 }
-
-redisInitial();
+connectRedis();
 // -------------------------------
 
 // =================================================
@@ -90,8 +42,9 @@ const { encryptPassword, matchPassword } = require('./lib/helpers');
 // ================================================================================
 
 const app = express();
-const port = 5000;
+const port = 5000; // 6379
 
+app.use(responseTime());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.PARSER_SECRET));
@@ -335,28 +288,8 @@ app.post('/login', (req, res, next) => {
         return next(); // We continue if not
     }
 }, passport.authenticate('local'),
-async function(req, res) {
-  // Redis Initialization
-  await getAll(req.user.uid).then(async (results) => {
-    if (results){
-        for (let i = 0; i < results.length; i++) {
-            await Promise.all([
-                client.json.set(`employee:${i+1}`, '$', results[i])
-            ]);
-        }
-
-        let resultYei = await client.ft.search(
-            "idx:employees",
-            "000134781IBM @certification:'Big Data Foundations - Level 1'"
-        );
-        console.log(JSON.stringify(resultYei, null, 2));
-        res.status(200).send({ response: 'Ok' }); // We return Ok if we log in
-    }
-    else {
-        res.status(200).send({ response: 'Ok' }); // We return Ok if we log in
-    }
-  });
-  // -------------
+function(req, res) {
+    res.status(200).send({ response: 'Ok' }); // We return Ok if we log in
 });
 
 // Logout
@@ -508,7 +441,35 @@ app.get('/', (req, res) => {
 app.get('/general', userLoggedIn, ensureSecondFactor, async (req,res) => {
     try {
         console.log("general");
-        res.status(200).send(await getAll(req.user.uid));
+        // Search Data in Redis
+        const reply = await client.get("general");
+        // if exists returns from redis and finish with response
+        if (reply) {
+            console.log("Redis returns");
+            return res.status(200).send(JSON.parse(reply));
+        }
+
+        // Fetching Data from Database
+        getAll(req.user.uid).then(async (response)=>{
+            if (response){
+                // Saving the results in Redis. The "EX" and 10, sets an expiration of 10 Seconds
+                const saveResult = await client.set(
+                    "general",
+                    JSON.stringify(response),
+                    {
+                    EX: 10,
+                    }
+                );
+                console.log(saveResult)
+            
+                // resond to client
+                res.status(200).send(response);
+            }
+            else {
+                res.status(400).send("Error");
+            }     
+        });
+        //res.status(200).send();
     }
     catch(error){
         console.log(error);
@@ -519,7 +480,35 @@ app.get('/general', userLoggedIn, ensureSecondFactor, async (req,res) => {
 // Get Bookmarks
 app.get('/get-bookmarks', userLoggedIn, ensureSecondFactor, async (req,res) => {
     try {
-        res.status(200).send(await getBookmark(req.user.uid));
+        console.log("bookmarks");
+        // Search Data in Redis
+        const reply = await client.get("bookmarks");
+        // if exists returns from redis and finish with response
+        if (reply) {
+            console.log("Redis returns");
+            return res.status(200).send(JSON.parse(reply));
+        }
+        //res.status(200).send(await getBookmark(req.user.uid));
+        // Fetching Data from Database
+        getBookmark(req.user.uid).then(async (response)=>{
+            if (response){
+                // Saving the results in Redis. The "EX" and 10, sets an expiration of 10 Seconds
+                const saveResult = await client.set(
+                    "bookmarks",
+                    JSON.stringify(response),
+                    {
+                    EX: 10,
+                    }
+                );
+                console.log(saveResult)
+            
+                // resond to client
+                res.status(200).send(response);
+            }
+            else {
+                res.status(400).send("Error");
+            }     
+        });
     }
     catch(error){
         console.log(error);
@@ -566,7 +555,35 @@ app.post('/check', userLoggedIn, ensureSecondFactor, async (req,res) => {
 // Get All Certifications from Users
 app.get('/certifications', userLoggedIn, ensureSecondFactor, async (req,res) => {
     try {
-        res.status(200).send(await getCertificationsFromUser(req.user.uid, req.body.employee));
+        console.log("certifications");
+        // Search Data in Redis
+        const reply = await client.get("certifications");
+        // if exists returns from redis and finish with response
+        if (reply) {
+            console.log("Redis returns");
+            return res.status(200).send(JSON.parse(reply));
+        }
+        //res.status(200).send(await getCertificationsFromUser(req.user.uid, req.body.employee));
+        // Fetching Data from Database
+        getCertificationsFromUser(req.user.uid, req.body.employee).then(async (response)=>{
+            if (response){
+                // Saving the results in Redis. The "EX" and 10, sets an expiration of 10 Seconds
+                const saveResult = await client.set(
+                    "certifications",
+                    JSON.stringify(response),
+                    {
+                    EX: 10,
+                    }
+                );
+                console.log(saveResult)
+            
+                // resond to client
+                res.status(200).send(response);
+            }
+            else {
+                res.status(400).send("Error");
+            }     
+        });
     }
     catch(error){
         console.log(error);
