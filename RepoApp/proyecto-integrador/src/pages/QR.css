@@ -18,7 +18,7 @@
     position: fixed;
 }
 
-.titulo {
+.tituloQR {
     width: 55.625vw;
     height: 6px;
     font-family: 'IBM Plex Sans', sans-serif;
@@ -26,26 +26,26 @@
     font-weight: 3.5vw;
     font-size: 50px;
     line-height: 3.5vw;
-    margin-top: 3.5vw;
+    margin-top: 4vw;
     color: #FFFFFF;
-    margin-left: 15vw;
+    margin-left: 33vw;
 }
 
-.texto {
+.textoQR {
     font-family: 'IBM Plex Sans', sans-serif;
     font-style: normal;
     font-size: 20px;
     margin-top: 10vw;
     color: #FFFFFF;
-    margin-left: 15vw;
+    margin-left: -55vw;
 }
 
 .QR{
     margin-top: 15vw;
-    margin-left: -30vw;
+    margin-left: -28vw;
 }
 
-.clave{
+.claveQR{
     font-family: 'IBM Plex Sans', sans-serif;
     font-style: normal;
     font-size: 15px;
@@ -53,11 +53,11 @@
     margin-left: -45vw;
 }
 
-.texto1 {
+.texto1QR {
     font-family: 'IBM Plex Sans', sans-serif;
     font-style: normal;
     font-size: 20px;
     margin-top: 38vw;
     color: #FFFFFF;
-    margin-left: -32vw;
+    margin-left: -30vw;
 }

@@ -4,7 +4,7 @@ import { UserAvatar, Bookmark, BookmarkFilled } from '@carbon/icons-react';
 
 const Empleado = () => {
   const [bookmarks, setBookmarks] = useState([]);
-  const exampleId = 'example-id'; // Ejemplo de variable Id
+  const exampleId = 'example-id'; 
 
   const handleBookmarkClick = (id) => {
     if (bookmarks.includes(id)) {

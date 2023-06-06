@@ -23,7 +23,7 @@
     margin-top: 8vw;
 }
 
-.password {
+.passwordL {
     box-sizing: border-box;
     display: flex;
     gap: 1vw;
@@ -32,9 +32,10 @@
     background: #393939;
     border: 2px solid #FFFFFF;
     margin-top: 2vw;
+    left: 10vw;
 }
 
-.button{
+.buttonL{
     display: flex;
     flex-direction: column;
     align-items: flex-start;

@@ -9,8 +9,8 @@ const Login = () => {
         <label htmlFor="credentials"></label>
         <input type="text" name="username" id="login" className="credentials" placeholder="  Credentials"/><br></br>
         <label htmlFor="password"></label>
-        <input type="password" name="password" id="password" className="password" placeholder="  Password" />
-        <button type="submit" className="button">Log In</button>
+        <input type="password" name="password" id="password" className="passwordL" placeholder="  Password" />
+        <button type="submit" className="buttonL">Log In</button>
       </form>
     </div>
   );
