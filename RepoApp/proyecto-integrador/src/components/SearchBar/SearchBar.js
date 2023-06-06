@@ -6,6 +6,41 @@ import axios from 'axios';
 function SearchBar(props) {
   const [searchTerm, setSearchTerm] = useState('');
   const [data, setData] = useState([{}]); // Lista de JSON resultado de busqueda
+/*
+  With this format:
+  [
+    {
+        "id": "Y9G6AN820IBM",
+        "name": "Juan García Mendez",
+        "org": "Finance and Operations",
+        "work_location": "Wroclaw, DS , Poland",
+        "certification": "Cognitive Practitioner",
+        "issue_date": "1899-11-30T06:36:36.000Z",
+        "type": "badge",
+        "bookmarked": 0
+    },
+    {
+        "id": "Y9G6AN820IBM",
+        "name": "Juan García Mendez",
+        "org": "Finance and Operations",
+        "work_location": "Wroclaw, DS , Poland",
+        "certification": "IBM Agile Explorer",
+        "issue_date": "1899-11-30T06:36:36.000Z",
+        "type": "badge",
+        "bookmarked": 0
+    },
+    {
+        "id": "Y9G6AN820IBM",
+        "name": "Juan García Mendez",
+        "org": "Finance and Operations",
+        "work_location": "Wroclaw, DS , Poland",
+        "certification": "IBM Cloud Essentials",
+        "issue_date": "1899-11-30T06:36:36.000Z",
+        "type": "badge",
+        "bookmarked": 0
+    }
+  ]
+  */
 
   // Función de search
   const search = (text) => {

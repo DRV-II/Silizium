@@ -5,6 +5,83 @@ import { UserAvatar, Bookmark, BookmarkFilled } from '@carbon/icons-react';
 const Empleado = () => {
   const [bookmarks, setBookmarks] = useState([]);
   const exampleId = 'example-id'; 
+  // Here the data (list of certifications)
+  const [data, setData] = useState([{}]);
+  /*
+  With this format:
+  [
+    {
+        "id": "000134781IBM",
+        "name": "Juan García Mendez",
+        "org": "Finance and Operations",
+        "work_location": "Guadalajara, JAL, Mexico",
+        "certification": "Big Data Foundations - Level 1",
+        "issue_date": "2020-09-02",
+        "type": "badge",
+        "bookmarked": 1
+    },
+    {
+        "id": "000134781IBM",
+        "name": "Juan García Mendez",
+        "org": "Finance and Operations",
+        "work_location": "Guadalajara, JAL, Mexico",
+        "certification": "Big Data Foundations - Level 2",
+        "issue_date": "2020-09-02",
+        "type": "badge",
+        "bookmarked": 0
+    }
+  ]
+  */
+
+  // Get certifications from employee
+  const getCertifications = (id) => {
+    axios({
+      method: "GET",
+      data: {
+        employee: id
+      },
+      withCredentials: true,
+      url: "http://localhost:5000/certifications",
+    }).then((res) => {
+      setData(res.data);
+      console.log(res.data);
+    });
+  };
+
+  // Call this wherever you want
+  // New Bookmark
+  const newBookmark = (id, certification) => {
+    axios({
+      method: "POST",
+      data: {
+        employee: id,
+        certificate: certification,
+      },
+      withCredentials: true,
+      url: "http://localhost:5000/check",
+    }).then((res) => {
+      //setData(res.data);
+      console.log(res.data);
+    });
+  };
+
+  // Delete Bookmark
+
+  const deleteBookmark = (id, certification) => {
+    axios({
+      method: "DELETE",
+      data: {
+        employee: id,
+        certificate: certification,
+      },
+      withCredentials: true,
+      url: "http://localhost:5000/unbook",
+    }).then((res) => {
+      //setData(res.data);
+      console.log(res.data);
+    });
+  };
+
 
   const handleBookmarkClick = (id) => {
     if (bookmarks.includes(id)) {
