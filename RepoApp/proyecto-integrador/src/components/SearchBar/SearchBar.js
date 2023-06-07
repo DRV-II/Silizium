@@ -42,35 +42,34 @@ function SearchBar(props) {
   ]
   */
 
-  // Función de search
-  const search = (text) => {
-    axios({
-      method: "POST",
-      data: {
-        searchText: text,
-      },
-      withCredentials: true,
-      url: "http://localhost:5000/search",
-    }).then((res) => {
-      setData(res.data);
-      console.log(res.data);
-    });
+  const search = () => {
+    axios
+      .post("http://localhost:5000/search", {
+        searchText: searchTerm,
+      })
+      .then((res) => {
+        setData(res.data);
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
-  function handleInputChange(event) {
+  const handleInputChange = (event) => {
     setSearchTerm(event.target.value);
-  }
+  };
 
-  function handleSubmit(event) {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    props.onSearch(searchTerm);
-  }
+    search();
+  };
 
   return (
     <form className="search-form" onSubmit={handleSubmit}>
       <div className="search-container">
-      <button type="submit" className="search-button">
-        <Search className="search-icon"/>
+        <button type="submit" className="search-button">
+          <Search className="search-icon" />
         </button>
         <input
           type="text"
