@@ -30,6 +30,7 @@ const { encryptPassword, matchPassword } = require('./lib/helpers');
 
 const app = express();
 const port = 5000;
+const homePage = "http://localhost:3000";
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -275,7 +276,7 @@ app.post('/login', (req, res, next) => {
     }
 }, passport.authenticate('local'),
 function(req, res) {
-  res.status(200).send({ response: 'Ok' }); // We return Ok if we log in
+  res.status(200).redirect(homePage); // We return Ok if we log in
 });
 
 // Logout
