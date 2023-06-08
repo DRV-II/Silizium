@@ -38,9 +38,9 @@ const Empleado = () => {
   // Get certifications from employee
   const getCertifications = (uid) => {
     axios({
-      method: "GET",
+      method: "POST",
       data: {
-        employee: uid
+        employee: uid,
       },
       withCredentials: true,
       url: "http://localhost:5000/certifications",
@@ -49,6 +49,8 @@ const Empleado = () => {
       console.log(res.data);
     });
   };
+
+  // So it only does it one time
   useEffect(() => {
     getCertifications(exampleId);
   }, []);
@@ -133,7 +135,7 @@ const Empleado = () => {
             </thead>
             <tbody>
               {data.map(({ id, certification, issue_date, type }) => (
-                <tr key={id}>
+                <tr key={id + certification}>
                   <td>{certification}</td>
                   <td>{issue_date}</td>
                   <td>{type}</td>

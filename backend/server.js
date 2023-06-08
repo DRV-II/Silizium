@@ -313,7 +313,8 @@ app.post('/register', userLoggedIn, ensureSecondFactor, async (req, res) => {
                     if(user.role === process.env.USER_DELETED){
                         activeUser(req.body.username, password).then((success)=>{
                             if(success){
-                                res.status(201).send({ response: 'Created'});
+                                res.status(201).redirect(homePage);
+                                //res.status(201).send({ response: 'Created'});
                             }
                             else{
                                 res.status(500).send({ response: 'Internal Server Error' });
@@ -357,7 +358,8 @@ app.post('/delete', userLoggedIn, ensureSecondFactor, async (req, res) => {
             // We update table
             deleteUser(req.body.username).then((success)=>{
                 if(success){
-                    res.status(201).send({ response: 'User deleted' });
+                    res.status(201).redirect(homePage);
+                    //res.status(201).send({ response: 'User deleted' });
                 }
                 else{
                     res.status(500).send({ response: 'Internal Server Error '});
@@ -484,8 +486,9 @@ app.post('/check', userLoggedIn, ensureSecondFactor, async (req,res) => {
 });
 
 // Get All Certifications from Users
-app.get('/certifications', userLoggedIn, ensureSecondFactor, async (req,res) => {
+app.post('/certifications', userLoggedIn, ensureSecondFactor, async (req,res) => {
     try {
+        console.log("certifications");
         res.status(200).send(await getCertificationsFromUser(req.user.uid, req.body.employee));
     }
     catch(error){
