@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect  } from 'react';
 import axios from 'axios';
 import './Empleado.css';
 import { UserAvatar, Bookmark, BookmarkFilled } from '@carbon/icons-react';
 
 const Empleado = () => {
   const [bookmarks, setBookmarks] = useState([]);
-  const exampleId = 'example-id'; 
+  const exampleId = '000134781IBM'; 
   // Here the data (list of certifications)
   const [data, setData] = useState([{}]);
+
   /*
   With this format:
   [
@@ -35,11 +36,11 @@ const Empleado = () => {
   */
 
   // Get certifications from employee
-  const getCertifications = (id) => {
+  const getCertifications = (uid) => {
     axios({
       method: "GET",
       data: {
-        employee: id
+        employee: uid
       },
       withCredentials: true,
       url: "http://localhost:5000/certifications",
@@ -48,7 +49,9 @@ const Empleado = () => {
       console.log(res.data);
     });
   };
-
+  useEffect(() => {
+    getCertifications(exampleId);
+  }, []);
   // Call this wherever you want
   // New Bookmark
   const newBookmark = (id, certification) => {
@@ -103,8 +106,8 @@ const Empleado = () => {
           <h2 className="texto2">Guadalajara, JAL.<br /> México</h2>
           <h1 className="texto3">Org</h1>
           <h2 className="texto4">Finance and Operations</h2>
-          <td className="bookmark" onClick={() => handleBookmarkClick(exampleId)}>
-            {bookmarks.includes(exampleId) ? (
+          <td className="bookmark" onClick={() => handleBookmarkClick('example-id')}>
+            {bookmarks.includes('example-id') ? (
               <BookmarkFilled size="40" fill="#F1C21B" />
             ) : (
               <Bookmark size="40" />
@@ -129,21 +132,13 @@ const Empleado = () => {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>IBM Agile Explorer</td>
-                <td>2020-04-08</td>
-                <td>badge</td>
-              </tr>
-              <tr>
-                <td>Data analysis Using Python</td>
-                <td>2021-02-16</td>
-                <td>external certification</td>
-              </tr>
-              <tr>
-                <td>Think Like a Hacker</td>
-                <td>2022-05-19</td>
-                <td>badge</td>
-              </tr>
+              {data.map(({ id, certification, issue_date, type }) => (
+                <tr key={id}>
+                  <td>{certification}</td>
+                  <td>{issue_date}</td>
+                  <td>{type}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

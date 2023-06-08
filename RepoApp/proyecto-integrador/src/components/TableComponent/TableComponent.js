@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './TableComponent.css';
 //import { Certifications } from '../../data/Certifications';
 import {Bookmark, BookmarkFilled} from '@carbon/icons-react';
@@ -9,7 +9,7 @@ const TableComponent = (props) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [bookmarks, setBookmarks] = useState([]);
-  const [data, setData] = useState([{}]);
+  const [data, setData] = useState([{}]); 
 
   const getCertificationsTable = () => {
     axios({
@@ -61,7 +61,9 @@ const TableComponent = (props) => {
   };
 
   // Setea data
-  getCertificationsTable(); // Esta función se llama cuando no hay texto en el search bar
+  useEffect(() => {
+    getCertificationsTable();
+  }, []); // Esta función se llama cuando no hay texto en el search bar
   // Se asigna valores de Certificaciones
   var Certifications = data;
   // Determine the total number of pages based on the items per page value and the length of the array
