@@ -1,41 +1,16 @@
-import React, { useState, useEffect  } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Empleado.css';
 import { UserAvatar, Bookmark, BookmarkFilled } from '@carbon/icons-react';
 
 const Empleado = () => {
   const [bookmarks, setBookmarks] = useState([]);
-  const exampleId = '000134781IBM'; 
-  // Here the data (list of certifications)
+  const exampleId = '063135781IBM'; 
   const [data, setData] = useState([{}]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const certificationsPerPage = 3;
+  const [employee, setEmployee] =  useState(["id", "work_location", "org"]);
 
-  /*
-  With this format:
-  [
-    {
-        "id": "000134781IBM",
-        "name": "Juan García Mendez",
-        "org": "Finance and Operations",
-        "work_location": "Guadalajara, JAL, Mexico",
-        "certification": "Big Data Foundations - Level 1",
-        "issue_date": "2020-09-02",
-        "type": "badge",
-        "bookmarked": 1
-    },
-    {
-        "id": "000134781IBM",
-        "name": "Juan García Mendez",
-        "org": "Finance and Operations",
-        "work_location": "Guadalajara, JAL, Mexico",
-        "certification": "Big Data Foundations - Level 2",
-        "issue_date": "2020-09-02",
-        "type": "badge",
-        "bookmarked": 0
-    }
-  ]
-  */
-
-  // Get certifications from employee
   const getCertifications = (uid) => {
     axios({
       method: "POST",
@@ -46,48 +21,13 @@ const Empleado = () => {
       url: "http://localhost:5000/certifications",
     }).then((res) => {
       setData(res.data);
-      console.log(res.data);
+      setEmployee([res.data[0]["id"], res.data[0]["work_location"], res.data[0]["org"]]);
     });
   };
 
-  // So it only does it one time
   useEffect(() => {
     getCertifications(exampleId);
   }, []);
-  // Call this wherever you want
-  // New Bookmark
-  const newBookmark = (id, certification) => {
-    axios({
-      method: "POST",
-      data: {
-        employee: id,
-        certificate: certification,
-      },
-      withCredentials: true,
-      url: "http://localhost:5000/check",
-    }).then((res) => {
-      //setData(res.data);
-      console.log(res.data);
-    });
-  };
-
-  // Delete Bookmark
-
-  const deleteBookmark = (id, certification) => {
-    axios({
-      method: "DELETE",
-      data: {
-        employee: id,
-        certificate: certification,
-      },
-      withCredentials: true,
-      url: "http://localhost:5000/unbook",
-    }).then((res) => {
-      //setData(res.data);
-      console.log(res.data);
-    });
-  };
-
 
   const handleBookmarkClick = (id) => {
     if (bookmarks.includes(id)) {
@@ -97,6 +37,33 @@ const Empleado = () => {
     }
   };
 
+  const nextPage = () => {
+    setCurrentPage(currentPage + 1);
+  };
+
+  const prevPage = () => {
+    setCurrentPage(currentPage - 1);
+  };
+
+  const indexOfLastCertification = currentPage * certificationsPerPage;
+  const indexOfFirstCertification = indexOfLastCertification - certificationsPerPage;
+  const currentCertifications = data.slice(indexOfFirstCertification, indexOfLastCertification);
+
+  const renderPaginationButtons = () => {
+    const totalPages = Math.ceil(data.length / certificationsPerPage);
+
+    return (
+      <div className='flechas-container'>
+        {currentPage > 1 && (
+          <button onClick={prevPage} className="flecha" >&lt;</button>
+        )}
+        {currentPage < totalPages && (
+          <button onClick={nextPage} className="flecha"> &gt;</button>
+        )}
+      </div>
+    );
+  };
+
   return (
     <div className="empleado-container">
       <div className="top-empleado">
@@ -104,10 +71,10 @@ const Empleado = () => {
           <UserAvatar size="125" className='avatar' />
         </div>
         <div className="top-textos">
-          <h1 className="texto">000306781IBM</h1>
-          <h2 className="texto2">Guadalajara, JAL.<br /> México</h2>
-          <h1 className="texto3">Org</h1>
-          <h2 className="texto4">Finance and Operations</h2>
+        <h1 className="texto">{employee[0]}</h1>
+        <h2 className="texto2">{employee[1]}</h2>
+        <h1 className="texto3">Org</h1>
+        <h2 className="texto4">{employee[2]}</h2>
           <td className="bookmark" onClick={() => handleBookmarkClick('example-id')}>
             {bookmarks.includes('example-id') ? (
               <BookmarkFilled size="40" fill="#F1C21B" />
@@ -134,7 +101,7 @@ const Empleado = () => {
               </tr>
             </thead>
             <tbody>
-              {data.map(({ id, certification, issue_date, type }) => (
+              {currentCertifications.map(({ id, certification, issue_date, type }) => (
                 <tr key={id + certification}>
                   <td>{certification}</td>
                   <td>{issue_date}</td>
@@ -144,6 +111,7 @@ const Empleado = () => {
             </tbody>
           </table>
         </div>
+        {renderPaginationButtons()}
       </div>
     </div>
   );

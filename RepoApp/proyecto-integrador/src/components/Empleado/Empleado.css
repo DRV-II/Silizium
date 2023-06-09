@@ -27,7 +27,7 @@
     flex: 2;
     color:#262626;
     position:absolute;
-    margin-left: 23vw;
+    left: 35vw;
     background-color: transparent;
     margin-top: 5vw;
 }
@@ -35,7 +35,7 @@
 .texto2 {
     color: #262626;
     position:absolute;
-    margin-left: 23vw;
+    left: 35vw;
     background-color: transparent;
     margin-top: 9vw;
 }
@@ -43,7 +43,7 @@
 .texto3 {
     color: #262626;
     position:absolute;
-    margin-left: 50vw;
+    left: 62vw;
     background-color: transparent;
     margin-top: 5vw;
 }
@@ -51,7 +51,7 @@
 .texto4 {
     color: #262626;
     position:absolute;
-    margin-left: 50vw;
+    left: 62vw;
     background-color: transparent;
     margin-top: 9vw;
 }
@@ -65,12 +65,12 @@
 }
 
 .table-1{
-    margin-top: -20vw;
+    margin-top: -32vw;
     background-color: #f4f4f4;
     width: 70vw;
     margin-left: 20vw;
     border-radius: 30px;
-    margin-top: -30vw;
+    height: 30vw;
 }
 
 .table > :not(caption) > * > *{
@@ -79,4 +79,9 @@
 
 .col{
     text-align: left;
+}
+
+.flechas-container{
+    margin-left: 85vw;
+    margin-top: -3vw;
 }
