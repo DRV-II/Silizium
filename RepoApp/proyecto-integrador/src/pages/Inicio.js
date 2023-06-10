@@ -12,10 +12,12 @@ const Inicio = () => {
         <Sidebar/>
       </div>
       <div className="right-side-inicio">
+        <h1 className="titulo-inicio">Welcome</h1>
         <div className="right-side-inicio-top">
           <GraphAComponent/>
           <GraphBComponent/>
         </div>
+        <br></br>
         <div className="right-side-inicio-bot">
           <CardComponent/>
           <CardComponent/>

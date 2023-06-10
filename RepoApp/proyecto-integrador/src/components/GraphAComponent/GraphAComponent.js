@@ -8,25 +8,25 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 const GraphAComponent = () => {
   // Data for the chart
   const data = {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Light-blue'],
     datasets: [
       {
         data: [12, 19, 3, 5, 2, 3],
         backgroundColor: [
-          '#FF6384',
-          '#36A2EB',
-          '#FFCE56',
-          '#4BC0C0',
-          '#9966FF',
-          '#FF9F40',
+          '#da1e28',
+          '#0f62fe',
+          '#f1c21b',
+          '#42be65',
+          '#7F3AE7',
+          '#4589ff',
         ],
         hoverBackgroundColor: [
-          '#FF6384',
-          '#36A2EB',
+          '#ba1b23',
+          '#0353e9',
           '#FFCE56',
-          '#4BC0C0',
-          '#9966FF',
-          '#FF9F40',
+          '#157532',
+          '#e8daff',
+          '#BAE6FF',
         ],
       },
     ],
