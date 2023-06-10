@@ -1,32 +1,41 @@
-import React from 'react';
-import './Bookmark.css'
+import React, { useState, useEffect } from 'react';
+import './Bookmark.css';
 import Sidebar from '../components/Sidebar/Sidebar';
 import TableComponent from '../components/TableComponent/TableComponent';
+import { Bookmark, BookmarkFilled } from '@carbon/icons-react';
+import axios from 'axios';
 
-const Bookmark = () => {
-  const storedBookmarks = JSON.parse(localStorage.getItem('bookmarks')) || {};
-  const bookmarkIds = Object.keys(storedBookmarks);
+const BookmarkPage = () => {
+  const [bookmarks, setBookmarks] = useState({});
+
+  useEffect(() => {
+    axios({
+      method: "GET",
+      withCredentials: true,
+      url: "http://localhost:5000/get-bookmarks",
+    }).then((res) => {
+      setBookmarks(res.data);
+    });
+  }, []);
+
   return (
     <div className='certificados-container'>
       <div className='left-sidebar-cert'>
-      <Sidebar/>
+        <Sidebar />
       </div>
       <div className='right-sidecert'>
         <div className='right-left-upper'>
           <div className='cert-title'>
-            <h1>Bookmark </h1>
-            {bookmarkIds.map((bookmarkId) => (
-          <p key={bookmarkId}>{bookmarkId}</p>
-        ))}
+            <h1>Bookmark</h1>
           </div>
-        <div className='right-right-upper'>
-          <div>   
+          <div className='right-right-upper'>
+            <div></div>
           </div>
-        </div>
-        <TableComponent urlCert="http://localhost:5000/get-bookmarks"/>  
+          <TableComponent urlCert="http://localhost:5000/get-bookmarks" bookmarks={bookmarks} />
         </div>
       </div>
     </div>
   );
 };
-export default Bookmark;
+
+export default BookmarkPage;
