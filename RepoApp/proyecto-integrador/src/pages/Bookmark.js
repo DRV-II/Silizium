@@ -4,7 +4,8 @@ import Sidebar from '../components/Sidebar/Sidebar';
 import TableComponent from '../components/TableComponent/TableComponent';
 
 const Bookmark = () => {
-  const storedBookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
+  const storedBookmarks = JSON.parse(localStorage.getItem('bookmarks')) || {};
+  const bookmarkIds = Object.keys(storedBookmarks);
   return (
     <div className='certificados-container'>
       <div className='left-sidebar-cert'>
@@ -14,9 +15,9 @@ const Bookmark = () => {
         <div className='right-left-upper'>
           <div className='cert-title'>
             <h1>Bookmark </h1>
-            {storedBookmarks.map((bookmarkId) => (
-        <p key={bookmarkId}>{bookmarkId}</p>
-      ))}
+            {bookmarkIds.map((bookmarkId) => (
+          <p key={bookmarkId}>{bookmarkId}</p>
+        ))}
           </div>
         <div className='right-right-upper'>
           <div>   

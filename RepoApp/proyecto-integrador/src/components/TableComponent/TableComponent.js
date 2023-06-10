@@ -8,7 +8,7 @@ const TableComponent = (props) => {
   const { urlCert } = props;
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
-  const [bookmarks, setBookmarks] = useState([]);
+  const [bookmarks, setBookmarks] = useState({});
   const [data, setData] = useState([{}]); 
 
   const getCertificationsTable = () => {
@@ -90,12 +90,19 @@ const TableComponent = (props) => {
   };
 
   const handleBookmarkClick = (id) => {
-    if (bookmarks.includes(id)) {
-      setBookmarks(bookmarks.filter((bookmarkId) => bookmarkId !== id));
-    } else {
-      setBookmarks([...bookmarks, id]);
-    }
+    setBookmarks((prevBookmarks) => {
+      const updatedBookmarks = { ...prevBookmarks };
+    
+      if (updatedBookmarks[id]) {
+        delete updatedBookmarks[id]; // Elimina el marcador si ya existe
+      } else {
+        updatedBookmarks[id] = true; // Agrega el marcador si no existe
+      }
+    
+      return updatedBookmarks;
+    });
   };
+  
 
   return (
     <div className='tablecomponent-container'>
@@ -113,11 +120,11 @@ const TableComponent = (props) => {
             </tr>
           </thead>
           <tbody>
-            {Certifications.slice(startIndex, endIndex).map(({ id, org, work_location, certification, issue_date, type }) => (
-              <tr key={id}>
-                <td onClick={() => handleBookmarkClick(id)}>
-                  {bookmarks.includes(id) ? <BookmarkFilled size="20" fill="#F1C21B"/> : <Bookmark size="20"/>}
-                </td>
+          {Certifications.slice(startIndex, endIndex).map(({ id, org, work_location, certification, issue_date, type }, index) => (
+            <tr key={id}>
+              <td onClick={() => handleBookmarkClick(`${id}-${index}`)}>
+                {bookmarks[`${id}-${index}`] ? <BookmarkFilled size="20" fill="#F1C21B"/> : <Bookmark size="20"/>}
+              </td>
                 <td>{id}</td>
                 <td>{org}</td>
                 <td>{work_location}</td>
