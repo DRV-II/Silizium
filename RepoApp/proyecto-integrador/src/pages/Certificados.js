@@ -15,6 +15,9 @@ const Certificados = () => {
           <div className='cert-title'>
             <h1>Certifications </h1>
           </div>
+          <div className="searchbar">
+          <SearchBar/>
+          </div>
         <div className='right-right-upper'>
           <div>   
           </div>

@@ -5,10 +5,10 @@ import {Bookmark, BookmarkFilled} from '@carbon/icons-react';
 import axios from 'axios';
 
 const TableComponent = (props) => {
-  const { urlCert } = props;
+  const { urlCert, onDeleteBookmark } = props;
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
-  const [bookmarks, setBookmarks] = useState([]);
+  const [bookmarks, setBookmarks] = useState({});
   const [data, setData] = useState([{}]); 
 
   const getCertificationsTable = () => {
@@ -21,11 +21,6 @@ const TableComponent = (props) => {
       console.log(res.data);
     });
   };
-  // Funcion
-  /*
-  "employee": "000134781IBM",
-    "certificate": "Big Data Foundations - Level 1"
-  */
 
   // New Bookmark
   const newBookmark = (id, certification) => {
@@ -89,14 +84,35 @@ const TableComponent = (props) => {
     setCurrentPage(1); // Reset the current page number when changing the items per page value
   };
 
-  const handleBookmarkClick = (id) => {
-    if (bookmarks.includes(id)) {
-      setBookmarks(bookmarks.filter((bookmarkId) => bookmarkId !== id));
-    } else {
-      setBookmarks([...bookmarks, id]);
-    }
+  const handleBookmarkClick = (id, certification) => {
+    setBookmarks((prevBookmarks) => {
+      const updatedBookmarks = { ...prevBookmarks };
+  
+      if (updatedBookmarks[`${id}-${certification}`]) {
+        deleteBookmark(id, certification);
+        delete updatedBookmarks[`${id}-${certification}`]; // Eliminar el marcador del estado
+      } else {
+        newBookmark(id, certification);
+        updatedBookmarks[`${id}-${certification}`] = true; // Agregar el marcador al estado
+      }
+  
+      localStorage.setItem('bookmarks', JSON.stringify(updatedBookmarks)); // Guardar en el almacenamiento local
+  
+      return updatedBookmarks;
+    });
   };
 
+  useEffect(() => {
+    // Obtener el estado de los marcadores del almacenamiento local
+    const savedBookmarks = localStorage.getItem('bookmarks');
+    if (savedBookmarks) {
+      setBookmarks(JSON.parse(savedBookmarks));
+    }
+  
+    getCertificationsTable();
+  }, []);
+  
+  
   return (
     <div className='tablecomponent-container'>
       <div className='table-container'>
@@ -113,11 +129,11 @@ const TableComponent = (props) => {
             </tr>
           </thead>
           <tbody>
-            {Certifications.slice(startIndex, endIndex).map(({ id, org, work_location, certification, issue_date, type }) => (
-              <tr key={id}>
-                <td onClick={() => handleBookmarkClick(id)}>
-                  {bookmarks.includes(id) ? <BookmarkFilled size="20" fill="#F1C21B"/> : <Bookmark size="20"/>}
-                </td>
+          {Certifications.slice(startIndex, endIndex).map(({ id, org, work_location, certification, issue_date, type }, index) => (
+            <tr key={id}>
+              <td onClick={() => handleBookmarkClick(id, certification)}>
+                {bookmarks[`${id}-${certification}`] ? <BookmarkFilled size="20" fill="#F1C21B"/> : <Bookmark size="20"/>}
+              </td>
                 <td>{id}</td>
                 <td>{org}</td>
                 <td>{work_location}</td>

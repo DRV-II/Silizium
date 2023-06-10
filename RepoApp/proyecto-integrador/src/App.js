@@ -11,6 +11,7 @@ import TokenPage from './pages/TokenPage';
 import TokenPage2 from './pages/TokenPage2';
 import RegistrarUsuario from './pages/RegistrarUsuario';
 import DesactivarUsuario from './pages/DesactivarUsuario';
+import BookmarkPage from './pages/Bookmark';
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
           <Route path="/LoginPage" element={<LoginPage/>} />
           <Route path="/Inicio" element={<Inicio/>} />
           <Route path="/" element={<Certificados/>} />
-          <Route path="/Bookmark" element={<Bookmark/>} />
+          <Route path="/Bookmark" element={<BookmarkPage/>} />
           <Route path="/Empleado" element={<EmpleadoPage/>} />
           <Route path="/QR" element={<QR/>} />
           <Route path="/TokenPage" element={<TokenPage/>} />
