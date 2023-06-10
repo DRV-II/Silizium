@@ -187,7 +187,18 @@ async function getCertificationsFromUser(id, eid) {
     }
 }
 
+async function getCerData(){
+    try{
+        const [rows] = await pool.query(
+        `SELECT certification, COUNT(*) AS cantidad FROM certifications GROUP BY certification ORDER BY cantidad DESC`);
+        return rows;
+    }
+    catch(error) {
+        console.log(error);
+    }
+}
+
 //getUsers().then(console.log);
 //getUser('1234567890QW').then(console.log);
 
-module.exports = {getUser, getUsers, setUser, deleteUser, activeUser, search, saveKey, checkKey, getAll, bookmark, getBookmark, deleteBookmark, getCertificationsFromUser};
+module.exports = {getUser, getUsers, setUser, deleteUser, activeUser, search, saveKey, checkKey, getAll, bookmark, getBookmark, deleteBookmark, getCertificationsFromUser, getCerData};

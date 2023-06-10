@@ -16,7 +16,7 @@ require('dotenv').config();
 // Database queries
 // ================================================================================
 
-const {getUser, getUsers, setUser, deleteUser, activeUser, search, saveKey, checkKey, getAll, bookmark, getBookmark, deleteBookmark, getCertificationsFromUser} = require('./database.js');
+const {getUser, getUsers, setUser, deleteUser, activeUser, search, saveKey, checkKey, getAll, bookmark, getBookmark, deleteBookmark, getCertificationsFromUser, getCerData} = require('./database.js');
 
 // =================================================
 // Encryption
@@ -490,6 +490,17 @@ app.post('/certifications', userLoggedIn, ensureSecondFactor, async (req,res) =>
     try {
         console.log("certifications");
         res.status(200).send(await getCertificationsFromUser(req.user.uid, req.body.employee));
+    }
+    catch(error){
+        console.log(error);
+        res.status(500).send({ response: 'Internal Server Error' });
+    }
+});
+
+app.get('/getcerdata', userLoggedIn, ensureSecondFactor, async (req,res) => {
+    try{
+        console.log("certificationsData");
+        res.status(200).send(await getCerData())
     }
     catch(error){
         console.log(error);
