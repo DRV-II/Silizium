@@ -1,11 +1,32 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import axios from 'axios';
 import './Inicio.css';
 import Sidebar from '../components/Sidebar/Sidebar';
 import GraphAComponent from '../components/GraphAComponent/GraphAComponent';
 import GraphBComponent from '../components/GraphBComponent/GraphBComponent';
 import CardComponent from '../components/CardComponent/CardComponent';
+//require('dotenv').config();
+
 
 const Inicio = () => {
+
+  const [data,setData] = useState([{}]);
+
+  const getDataCertification = () => {
+    axios({
+      method: 'GET',
+      withCredentials : true,
+      url: 'http://localhost:5000/getcerdata' 
+    }).then((res) => {
+      setData(res.data);
+      console.log(res.data);
+    })
+  }
+
+  useEffect(() => {
+    getDataCertification();
+  },[]);
+
   return (
     <div className="inicio-container">
       <div className="left-side-inicio">

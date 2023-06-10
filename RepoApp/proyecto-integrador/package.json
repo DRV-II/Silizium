@@ -19,6 +19,7 @@
     "carbon-components-react": "^8.28.0",
     "carbon-web-components": "^1.21.0",
     "chart.js": "^4.3.0",
+    "dotenv": "^16.1.4",
     "faker": "^6.6.6",
     "qrcode.react": "^3.1.0",
     "react": "^18.2.0",
