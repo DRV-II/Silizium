@@ -2,6 +2,7 @@ import React from 'react';
 import './Sidebar.css';
 import { Bee, Home, Policy, TableOfContents, Logout } from '@carbon/icons-react';
 import { NavLink } from 'react-router-dom';
+import LogOut from '../Logout/Logout';
 
 const Sidebar = () => {
   return (
@@ -26,10 +27,13 @@ const Sidebar = () => {
         </NavLink>
       </div>
       <div>
-          <Logout size='56' className='logout' />
+          <NavLink to='/LoginPage' activeClassName='active'>
+            <LogOut/>
+          </NavLink> 
       </div>
     </div>
   );
 };
+
 
 export default Sidebar;
