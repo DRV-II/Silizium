@@ -1,12 +1,12 @@
 .bee{
     color: #0F62FE;
-    margin-left:30px;
+    margin-left: 2.5vw;
     margin-top: 40px;
 }
 
 .home{
     color: #8D8D8D;
-    margin-left:30px;
+    margin-left: 2.5vw;
     margin-top: 60px;
 }
 
@@ -15,25 +15,25 @@
     width: 5.5vw;
     height: 0.3vh;
     margin-top: 1vw;
-    margin-left: 1.2vw;
+    margin-left: 1.8vw;
     position: absolute;
 }
 
 .policy {
     color: #8D8D8D;
-    margin-left:30px;
+    margin-left: 2.5vw;
     margin-top: 60px;
 }
 
 .table1 {
     color: #8D8D8D;
-    margin-left:30px;
+    margin-left: 2.5vw;
     margin-top: 60px;
 }
 
 .logout {
     color: #8D8D8D;
-    margin-left:30px;
+    margin-left: 2.5vw;
     margin-top: 200px;
 }
 
