@@ -1,98 +1,90 @@
 .empleado-container {
-    display: column;
-    height: 100vh;
-  }
-  
-  .top-empleado {
-    display: -webkit-flex; /* Safari, iOS Safari */
-    display: -moz-flex; /* Firefox */
-    display: -ms-flexbox; /* IE 10+ */
-    display: flex;
-    width: 85%;
-    background: rgb(170, 185, 221);
-    background: linear-gradient(90deg, rgba(170, 185, 221, 1) 29%, rgba(69, 114, 228, 1) 73%);
-    height: 85vh;
-    margin-left: 12%;
-    margin-top: -53%;
-    border-radius: 30px;
-  }
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
 
-  @media (min-height: 850px) {
-    /* Estilos para pantallas más grandes */
-    .top-empleado {
-      margin-top: -43%;
-    }
-  }
-  
-  .avatar {
-    flex: 1;
-    margin-left: 10%;
-    background-color: transparent;
-    color: #262626;
-    position: absolute;
-    margin-top: 5%;
-  }
-  
-  .texto {
-    flex: 2;
-    color: #262626;
-    position: absolute;
-    left: 35%;
-    background-color: transparent;
-    margin-top: 5%;
-  }
-  
-  .texto2 {
-    color: #262626;
-    position: absolute;
-    left: 35%;
-    background-color: transparent;
-    margin-top: 9%;
-  }
-  
-  .texto3 {
-    color: #262626;
-    position: absolute;
-    left: 62%;
-    background-color: transparent;
-    margin-top: 5%;
-  }
-  
-  .texto4 {
-    color: #262626;
-    position: absolute;
-    left: 62%;
-    background-color: transparent;
-    margin-top: 9%;
-  }
-  
-  .bookmark {
-    color: #262626;
-    background-color: transparent;
-    position: absolute;
-    margin-left: 79%;
-    margin-top: 3%;
-  }
-  
-  .table-1 {
-    margin-top: -32%;
-    background-color: #f4f4f4;
-    width: 70%;
-    margin-left: 20%;
-    border-radius: 30px;
-    height: 28vw
-  }
-  
-  .table > :not(caption) > * > * {
-    padding: 1.7rem 5rem;
-  }
-  
-  .col {
-    text-align: left;
-  }
-  
-  .flechas-container {
-    margin-left: 85%;
-    margin-top: -2%;
-  }
-  
+.top-empleado {
+  display: flex;
+  width: 85%;
+  background: rgb(170, 185, 221);
+  background: linear-gradient(90deg, rgba(170, 185, 221, 1) 29%, rgba(69, 114, 228, 1) 73%);
+  height: 85vh;
+  margin-left: 12%;
+  margin-top: -93vh;
+  border-radius: 30px;
+}
+
+
+
+.avatar {
+  flex: 1;
+  margin-left: 10%;
+  background-color: transparent;
+  color: #262626;
+  position: absolute;
+  margin-top: 5%;
+}
+
+.texto {
+  flex: 2;
+  color: #262626;
+  position: absolute;
+  left: 35%;
+  background-color: transparent;
+  margin-top: 5%;
+}
+
+.texto2 {
+  color: #262626;
+  position: absolute;
+  left: 35%;
+  background-color: transparent;
+  margin-top: 9%;
+}
+
+.texto3 {
+  color: #262626;
+  position: absolute;
+  left: 62%;
+  background-color: transparent;
+  margin-top: 5%;
+}
+
+.texto4 {
+  color: #262626;
+  position: absolute;
+  left: 62%;
+  background-color: transparent;
+  margin-top: 9%;
+}
+
+.bookmark {
+  color: #262626;
+  background-color: transparent;
+  position: absolute;
+  margin-left: 79%;
+  margin-top: 3%;
+}
+
+.table-1 {
+  margin-top: -55vh;
+  background-color: #f4f4f4;
+  width: 70%;
+  margin-left: 20%;
+  border-radius: 30px;
+  height: 50vh;
+}
+
+.table > :not(caption) > * > * {
+  padding: 1.7rem 5rem;
+}
+
+.col {
+  text-align: left;
+}
+
+.flechas-container {
+  margin-left: 85%;
+  margin-top: -2%;
+}
