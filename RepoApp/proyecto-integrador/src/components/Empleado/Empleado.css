@@ -4,6 +4,9 @@
   }
   
   .top-empleado {
+    display: -webkit-flex; /* Safari, iOS Safari */
+    display: -moz-flex; /* Firefox */
+    display: -ms-flexbox; /* IE 10+ */
     display: flex;
     width: 85%;
     background: rgb(170, 185, 221);
@@ -12,6 +15,13 @@
     margin-left: 12%;
     margin-top: -53%;
     border-radius: 30px;
+  }
+
+  @media (min-height: 850px) {
+    /* Estilos para pantallas más grandes */
+    .top-empleado {
+      margin-top: -43%;
+    }
   }
   
   .avatar {
@@ -70,7 +80,7 @@
     width: 70%;
     margin-left: 20%;
     border-radius: 30px;
-    height: 30%;
+    height: 28vw
   }
   
   .table > :not(caption) > * > * {
@@ -83,6 +93,6 @@
   
   .flechas-container {
     margin-left: 85%;
-    margin-top: -3%;
+    margin-top: -2%;
   }
   

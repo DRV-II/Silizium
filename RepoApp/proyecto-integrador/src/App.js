@@ -4,7 +4,6 @@ import './App.css';
 import LoginPage from './pages/LoginPage';
 import Inicio from './pages/Inicio';
 import Certificados from './pages/Certificados';
-import Bookmark from './pages/Bookmark';
 import EmpleadoPage from './pages/EmpleadoPage';
 import QR from './pages/QR';
 import TokenPage from './pages/TokenPage';

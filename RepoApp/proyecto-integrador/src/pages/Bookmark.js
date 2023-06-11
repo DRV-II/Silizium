@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import './Bookmark.css';
 import Sidebar from '../components/Sidebar/Sidebar';
 import TableComponent from '../components/TableComponent/TableComponent';
-import { Bookmark, BookmarkFilled } from '@carbon/icons-react';
 import axios from 'axios';
 
 const BookmarkPage = () => {
