@@ -1,78 +1,104 @@
 import React, { useState, useEffect } from 'react';
 import './TableComponent.css';
-//import { Certifications } from '../../data/Certifications';
-import {Bookmark, BookmarkFilled} from '@carbon/icons-react';
+import { Bookmark, BookmarkFilled } from '@carbon/icons-react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-const TableComponent = (props) => {
-  const { urlCert, onDeleteBookmark } = props;
+const TableComponent = ({ urlCert }) => {
+  const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [bookmarks, setBookmarks] = useState({});
-  const [data, setData] = useState([{}]); 
+  const [certifications, setCertifications] = useState([]);
 
   const getCertificationsTable = () => {
     axios({
-      method: "GET",
+      method: 'GET',
       withCredentials: true,
       url: urlCert,
-    }).then((res) => {
-      setData(res.data);
-      console.log(res.data);
-    });
+    })
+      .then((res) => {
+        setCertifications(res.data);
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
-  // New Bookmark
   const newBookmark = (id, certification) => {
     axios({
-      method: "POST",
+      method: 'POST',
       data: {
         employee: id,
         certificate: certification,
       },
       withCredentials: true,
-      url: "http://localhost:5000/check",
-    }).then((res) => {
-      //setData(res.data);
-      console.log(res.data);
-    });
+      url: 'http://localhost:5000/check',
+    })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
-
-  // Delete Bookmark
 
   const deleteBookmark = (id, certification) => {
     axios({
-      method: "DELETE",
+      method: 'DELETE',
       data: {
         employee: id,
         certificate: certification,
       },
       withCredentials: true,
-      url: "http://localhost:5000/unbook",
-    }).then((res) => {
-      //setData(res.data);
-      console.log(res.data);
+      url: 'http://localhost:5000/unbook',
+    })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  useEffect(() => {
+    const savedBookmarks = localStorage.getItem('bookmarks');
+    if (savedBookmarks) {
+      setBookmarks(JSON.parse(savedBookmarks));
+    }
+
+    getCertificationsTable();
+  }, []);
+
+  const handleRowClick = (id) => {
+    navigate(`/Empleado/${id}`);
+  };
+
+  const handleBookmarkClick = (event, id, certification) => {
+    event.stopPropagation();
+
+    setBookmarks((prevBookmarks) => {
+      const updatedBookmarks = { ...prevBookmarks };
+
+      if (updatedBookmarks[`${id}-${certification}`]) {
+        deleteBookmark(id, certification);
+        delete updatedBookmarks[`${id}-${certification}`];
+      } else {
+        newBookmark(id, certification);
+        updatedBookmarks[`${id}-${certification}`] = true;
+      }
+
+      localStorage.setItem('bookmarks', JSON.stringify(updatedBookmarks));
+
+      return updatedBookmarks;
     });
   };
 
-  // Setea data
-  useEffect(() => {
-    getCertificationsTable();
-  }, []); // Esta función se llama cuando no hay texto en el search bar
-  // Se asigna valores de Certificaciones
-  var Certifications = data;
-  // Determine the total number of pages based on the items per page value and the length of the array
-  const totalPages = Math.ceil(Certifications.length / itemsPerPage);
-
-  // Calculate the range of items currently being shown on the table
+  const totalPages = Math.ceil(certifications.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = Math.min(startIndex + itemsPerPage, Certifications.length);
-
-  // Generate an array of page numbers for the dropdown
-  const pageNumbers = [];
-  for (let i = 1; i <= totalPages; i++) {
-    pageNumbers.push(i);
-  }
+  const endIndex = Math.min(startIndex + itemsPerPage, certifications.length);
+  const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -81,41 +107,12 @@ const TableComponent = (props) => {
   const handleItemsPerPageChange = (event) => {
     const value = event.target.value;
     setItemsPerPage(parseInt(value));
-    setCurrentPage(1); // Reset the current page number when changing the items per page value
+    setCurrentPage(1);
   };
 
-  const handleBookmarkClick = (id, certification) => {
-    setBookmarks((prevBookmarks) => {
-      const updatedBookmarks = { ...prevBookmarks };
-  
-      if (updatedBookmarks[`${id}-${certification}`]) {
-        deleteBookmark(id, certification);
-        delete updatedBookmarks[`${id}-${certification}`]; // Eliminar el marcador del estado
-      } else {
-        newBookmark(id, certification);
-        updatedBookmarks[`${id}-${certification}`] = true; // Agregar el marcador al estado
-      }
-  
-      localStorage.setItem('bookmarks', JSON.stringify(updatedBookmarks)); // Guardar en el almacenamiento local
-  
-      return updatedBookmarks;
-    });
-  };
-
-  useEffect(() => {
-    // Obtener el estado de los marcadores del almacenamiento local
-    const savedBookmarks = localStorage.getItem('bookmarks');
-    if (savedBookmarks) {
-      setBookmarks(JSON.parse(savedBookmarks));
-    }
-  
-    getCertificationsTable();
-  }, []);
-  
-  
   return (
-    <div className='tablecomponent-container'>
-      <div className='table-container'>
+    <div className="tablecomponent-container">
+      <div className="table-container">
         <table>
           <thead>
             <tr>
@@ -129,11 +126,17 @@ const TableComponent = (props) => {
             </tr>
           </thead>
           <tbody>
-          {Certifications.slice(startIndex, endIndex).map(({ id, org, work_location, certification, issue_date, type }, index) => (
-            <tr key={id}>
-              <td onClick={() => handleBookmarkClick(id, certification)}>
-                {bookmarks[`${id}-${certification}`] ? <BookmarkFilled size="20" fill="#F1C21B"/> : <Bookmark size="20"/>}
-              </td>
+            {certifications.slice(startIndex, endIndex).map(({ id, org, work_location, certification, issue_date, type }) => (
+              <tr key={id} onClick={() => handleRowClick(id)}>
+                <td>
+                  <span onClick={(event) => handleBookmarkClick(event, id, certification)}>
+                    {bookmarks[`${id}-${certification}`] ? (
+                      <BookmarkFilled size="20" fill="#F1C21B" />
+                    ) : (
+                      <Bookmark size="20" />
+                    )}
+                  </span>
+                </td>
                 <td>{id}</td>
                 <td>{org}</td>
                 <td>{work_location}</td>
@@ -141,48 +144,48 @@ const TableComponent = (props) => {
                 <td>{issue_date}</td>
                 <td>{type}</td>
               </tr>
-          ))}
+            ))}
           </tbody>
         </table>
       </div>
-        <div className='pagination'>
-          <div className='page-info'>
-            Page {currentPage} of {totalPages} pages | Showing {startIndex + 1}-{endIndex} of {Certifications.length} IDs
-          </div>
-          <div className='page-dropdown'>
-            <select value={currentPage} onChange={(e) => handlePageChange(parseInt(e.target.value))}>
-              {pageNumbers.map((pageNumber) => (
-                <option key={pageNumber} value={pageNumber}>
-                  Page {pageNumber}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className='items-per-page-dropdown'>
-            <select value={itemsPerPage} onChange={handleItemsPerPageChange}>
-              <option value='10'>10 items per page</option>
-              <option value='50'>50 items per page</option>
-              <option value='100'>100 items per page</option>
-              <option value={Certifications.length}>All items</option>
-            </select>
-          </div>
-          <div className='page-arrows'>
-            <button
-              className='arrow-button'
-              disabled={currentPage === 1}
-              onClick={() => handlePageChange(currentPage - 1)}
-            >
-              &lt;
-            </button>
-            <button
-              className='arrow-button'
-              disabled={currentPage === totalPages}
-              onClick={() => handlePageChange(currentPage + 1)}
-            >
-              &gt;
-            </button>
-          </div>
+      <div className="pagination">
+        <div className="page-info">
+          Page {currentPage} of {totalPages} pages | Showing {startIndex + 1}-{endIndex} of {certifications.length} IDs
         </div>
+        <div className="page-dropdown">
+          <select value={currentPage} onChange={(e) => handlePageChange(parseInt(e.target.value))}>
+            {pageNumbers.map((pageNumber) => (
+              <option key={pageNumber} value={pageNumber}>
+                Page {pageNumber}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="items-per-page-dropdown">
+          <select value={itemsPerPage} onChange={handleItemsPerPageChange}>
+            <option value="10">10 items per page</option>
+            <option value="50">50 items per page</option>
+            <option value="100">100 items per page</option>
+            <option value={certifications.length}>All items</option>
+          </select>
+        </div>
+        <div className="page-arrows">
+          <button
+            className="arrow-button"
+            disabled={currentPage === 1}
+            onClick={() => handlePageChange(currentPage - 1)}
+          >
+            &lt;
+          </button>
+          <button
+            className="arrow-button"
+            disabled={currentPage === totalPages}
+            onClick={() => handlePageChange(currentPage + 1)}
+          >
+            &gt;
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

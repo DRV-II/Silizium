@@ -3,13 +3,12 @@ import axios from 'axios';
 import './Empleado.css';
 import { UserAvatar, Bookmark, BookmarkFilled } from '@carbon/icons-react';
 
-const Empleado = () => {
+const Empleado = ({ id }) => {
   const [bookmarks, setBookmarks] = useState([]);
-  const exampleId = '063135781IBM'; 
   const [data, setData] = useState([{}]);
   const [currentPage, setCurrentPage] = useState(1);
   const certificationsPerPage = 3;
-  const [employee, setEmployee] =  useState(["id", "work_location", "org"]);
+  const [employee, setEmployee] = useState(["id", "work_location", "org"]);
 
   const getCertifications = (uid) => {
     axios({
@@ -26,8 +25,8 @@ const Empleado = () => {
   };
 
   useEffect(() => {
-    getCertifications(exampleId);
-  }, []);
+    getCertifications(id);
+  }, [id]);
 
   const handleBookmarkClick = (id) => {
     if (bookmarks.includes(id)) {
@@ -55,10 +54,10 @@ const Empleado = () => {
     return (
       <div className='flechas-container'>
         {currentPage > 1 && (
-          <button onClick={prevPage} className="flecha" >&lt;</button>
+          <button onClick={prevPage} className="flecha">&lt;</button>
         )}
         {currentPage < totalPages && (
-          <button onClick={nextPage} className="flecha"> &gt;</button>
+          <button onClick={nextPage} className="flecha">&gt;</button>
         )}
       </div>
     );
@@ -71,12 +70,12 @@ const Empleado = () => {
           <UserAvatar size="125" className='avatar' />
         </div>
         <div className="top-textos">
-        <h1 className="texto">{employee[0]}</h1>
-        <h2 className="texto2">{employee[1]}</h2>
-        <h1 className="texto3">Org</h1>
-        <h2 className="texto4">{employee[2]}</h2>
-          <td className="bookmark" onClick={() => handleBookmarkClick('example-id')}>
-            {bookmarks.includes('example-id') ? (
+          <h1 className="texto">{employee[0]}</h1>
+          <h2 className="texto2">{employee[1]}</h2>
+          <h1 className="texto3">Org</h1>
+          <h2 className="texto4">{employee[2]}</h2>
+          <td className="bookmark" onClick={() => handleBookmarkClick(id)}>
+            {bookmarks.includes(id) ? (
               <BookmarkFilled size="40" fill="#F1C21B" />
             ) : (
               <Bookmark size="40" />

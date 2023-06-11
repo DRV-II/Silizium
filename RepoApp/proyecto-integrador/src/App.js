@@ -22,7 +22,7 @@ function App() {
           <Route path="/Inicio" element={<Inicio/>} />
           <Route path="/" element={<Certificados/>} />
           <Route path="/Bookmark" element={<BookmarkPage/>} />
-          <Route path="/Empleado" element={<EmpleadoPage/>} />
+          <Route path="/Empleado/:id" element={<EmpleadoPage/>} />
           <Route path="/QR" element={<QR/>} />
           <Route path="/TokenPage" element={<TokenPage/>} />
           <Route path="/TokenPage2" element={<TokenPage2/>} />
