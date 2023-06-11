@@ -1,87 +1,88 @@
-.empleado-container{
-    display:column;
+.empleado-container {
+    display: column;
     height: 100vh;
-}
-
-.top-empleado{
-    display:flex;
-    width: 85vw;
-    background: rgb(170,185,221);
-    background: linear-gradient(90deg, rgba(170,185,221,1) 29%, rgba(69,114,228,1) 73%);
+  }
+  
+  .top-empleado {
+    display: flex;
+    width: 85%;
+    background: rgb(170, 185, 221);
+    background: linear-gradient(90deg, rgba(170, 185, 221, 1) 29%, rgba(69, 114, 228, 1) 73%);
     height: 85vh;
-    margin-left: 12vw;
-    margin-top: -53vw;
+    margin-left: 12%;
+    margin-top: -53%;
     border-radius: 30px;
-}
-
-.avatar{
+  }
+  
+  .avatar {
     flex: 1;
-    margin-left: 10vw;
+    margin-left: 10%;
     background-color: transparent;
     color: #262626;
-    position:absolute;
-    margin-top: 5vw;
-}
-
-.texto {
+    position: absolute;
+    margin-top: 5%;
+  }
+  
+  .texto {
     flex: 2;
-    color:#262626;
-    position:absolute;
-    left: 35vw;
-    background-color: transparent;
-    margin-top: 5vw;
-}
-
-.texto2 {
     color: #262626;
-    position:absolute;
-    left: 35vw;
+    position: absolute;
+    left: 35%;
     background-color: transparent;
-    margin-top: 9vw;
-}
-
-.texto3 {
+    margin-top: 5%;
+  }
+  
+  .texto2 {
     color: #262626;
-    position:absolute;
-    left: 62vw;
+    position: absolute;
+    left: 35%;
     background-color: transparent;
-    margin-top: 5vw;
-}
-
-.texto4 {
+    margin-top: 9%;
+  }
+  
+  .texto3 {
     color: #262626;
-    position:absolute;
-    left: 62vw;
+    position: absolute;
+    left: 62%;
     background-color: transparent;
-    margin-top: 9vw;
-}
-
-.bookmark{
+    margin-top: 5%;
+  }
+  
+  .texto4 {
     color: #262626;
-    background-color:transparent;
-    position:absolute;
-    margin-left: 79vw;
-    margin-top: 3vw;
-}
-
-.table-1{
-    margin-top: -32vw;
+    position: absolute;
+    left: 62%;
+    background-color: transparent;
+    margin-top: 9%;
+  }
+  
+  .bookmark {
+    color: #262626;
+    background-color: transparent;
+    position: absolute;
+    margin-left: 79%;
+    margin-top: 3%;
+  }
+  
+  .table-1 {
+    margin-top: -32%;
     background-color: #f4f4f4;
-    width: 70vw;
-    margin-left: 20vw;
+    width: 70%;
+    margin-left: 20%;
     border-radius: 30px;
-    height: 30vw;
-}
-
-.table > :not(caption) > * > *{
+    height: 30%;
+  }
+  
+  .table > :not(caption) > * > * {
     padding: 1.7rem 5rem;
-}
-
-.col{
+  }
+  
+  .col {
     text-align: left;
-}
-
-.flechas-container{
-    margin-left: 85vw;
-    margin-top: -3vw;
-}
+  }
+  
+  .flechas-container {
+    margin-left: 85%;
+    margin-top: -3%;
+  }
+  
