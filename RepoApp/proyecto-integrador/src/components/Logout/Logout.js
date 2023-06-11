@@ -3,14 +3,6 @@ import '../Sidebar/Sidebar.css';
 import { Logout } from '@carbon/icons-react';
 import axios from 'axios'; 
 const LogOut = () => {
-    /*const handleClick = () => {
-        axios.post('http://localhost:5000/logout')
-        .then((response) =>{
-            console.log(response.data);
-        }).catch((error) => {
-            console.log(error);
-        }); 
-    }*/
 
     const handleClick = () => {
         axios({
