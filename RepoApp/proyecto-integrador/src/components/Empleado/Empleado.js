@@ -88,23 +88,23 @@ const Empleado = ({ id }) => {
           <table className="table">
             <thead>
               <tr>
-                <th scope="col" className="col">
-                  Certification
-                </th>
-                <th scope="col" className="col">
-                  Date
-                </th>
-                <th scope="col" className="col">
-                  Type
-                </th>
+              <th scope="col" className="col col-certification">
+                Certification
+              </th>
+              <th scope="col" className="col col-date">
+                Date
+              </th>
+              <th scope="col" className="col col-type">
+                Type
+              </th>
               </tr>
             </thead>
             <tbody>
               {currentCertifications.map(({ id, certification, issue_date, type }) => (
                 <tr key={id + certification}>
-                  <td>{certification}</td>
-                  <td>{issue_date}</td>
-                  <td>{type}</td>
+                <td className="col col-certification">{certification}</td>
+                <td className="col col-date">{issue_date}</td>
+                <td className="col col-type">{type}</td>
                 </tr>
               ))}
             </tbody>

@@ -88,3 +88,12 @@
   margin-left: 85%;
   margin-top: -2%;
 }
+
+.col-certification{
+  width: 50%; /* Puedes ajustar el ancho según tus necesidades */
+}
+
+.col-date,
+.col-type {
+  width: 25%; /* Puedes ajustar el ancho según tus necesidades */
+}
