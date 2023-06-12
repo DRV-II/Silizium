@@ -43,12 +43,13 @@
   .password {
       box-sizing: border-box;
       display: flex;
-      gap: 1vw;
+      gap: 3vw;
       width: 24vw;
       height: 6.7vh;
       background: #393939;
       border: 2px solid #FFFFFF;
       margin-left: -25vw;
+      margin-top: 2vw;
   }
 
   .confirm-password {
@@ -67,12 +68,11 @@
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      padding: 0.13vw;
       width: 6vw;
       height: 6.7vh;
       color: #0F62FE;
       padding-top: 1.4vw;
-      padding-left: 1.2vw;
+      padding-left: 1.3vw;
       background: #F4F4F4;
       border: #f4f4f4;
       margin-top: 3.5vw;
