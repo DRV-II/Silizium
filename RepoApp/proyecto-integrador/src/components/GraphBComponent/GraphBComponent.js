@@ -33,7 +33,8 @@ const options = {
   responsive: true,
   plugins: {
     legend: {
-      position: 'right',
+      position: 'bottom',
+      align: 'start',
     },
     backgroundColor: {
       color: '#FFFFFF',
@@ -54,6 +55,7 @@ const data = {
       data: [amount[4]],
       borderColor: '#f1c21b',
       backgroundColor: '#f1c21b',
+
     },
     {
       label: certs[6],

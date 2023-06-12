@@ -2,7 +2,7 @@ import React from 'react';
 import './Certificados.css';
 import Sidebar from '../components/Sidebar/Sidebar';
 import TableComponent from '../components/TableComponent/TableComponent';
-import SearchBar from '../components/SearchBar/SearchBar';
+// import SearchBar from '../components/SearchBar/SearchBar';
 
 const Certificados = () => {
   return (
@@ -16,7 +16,7 @@ const Certificados = () => {
             <h1>Certifications </h1>
           </div>
           <div className="searchbar">
-          <SearchBar/>
+          {/* <SearchBar/> */}
           </div>
         <div className='right-right-upper'>
           <div>   

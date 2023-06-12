@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './TableComponent.css';
-import { Bookmark, BookmarkFilled } from '@carbon/icons-react';
+import { Bookmark, BookmarkFilled, Search } from '@carbon/icons-react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -10,6 +10,9 @@ const TableComponent = ({ urlCert }) => {
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [bookmarks, setBookmarks] = useState({});
   const [certifications, setCertifications] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredData, setFilteredData] = useState([]);
+  const [searching, setSearching] = useState(false);
 
   const getCertificationsTable = () => {
     axios({
@@ -19,6 +22,7 @@ const TableComponent = ({ urlCert }) => {
     })
       .then((res) => {
         setCertifications(res.data);
+        setFilteredData(res.data);
         console.log(res.data);
       })
       .catch((error) => {
@@ -62,14 +66,11 @@ const TableComponent = ({ urlCert }) => {
       });
   };
 
-  useEffect(() => {
-    const savedBookmarks = localStorage.getItem('bookmarks');
-    if (savedBookmarks) {
-      setBookmarks(JSON.parse(savedBookmarks));
-    }
-
-    getCertificationsTable();
-  }, []);
+  const handleInputChange = (event) => {
+    const value = event.target.value;
+    setSearchTerm(value);
+    setSearching(true);
+  };
 
   const handleRowClick = (id) => {
     navigate(`/Empleado/${id}`);
@@ -95,9 +96,9 @@ const TableComponent = ({ urlCert }) => {
     });
   };
 
-  const totalPages = Math.ceil(certifications.length / itemsPerPage);
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = Math.min(startIndex + itemsPerPage, certifications.length);
+  const endIndex = Math.min(startIndex + itemsPerPage, filteredData.length);
   const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   const handlePageChange = (pageNumber) => {
@@ -110,47 +111,103 @@ const TableComponent = ({ urlCert }) => {
     setCurrentPage(1);
   };
 
+  const search = () => {
+    const searchTerms = searchTerm.toLowerCase().split(" ");
+  
+    const filtered = certifications.filter((certification) =>
+      searchTerms.every((term) => {
+        return (
+          certification.certification.toLowerCase().includes(term) ||
+          certification.id.toLowerCase().includes(term) ||
+          certification.work_location.toLowerCase().includes(term) ||
+          certification.org.toLowerCase().includes(term) ||
+          certification.type.toLowerCase().includes(term) ||
+          certification.issue_date.toLowerCase().includes(term)
+        );
+      })
+    );
+  
+    setFilteredData(filtered);
+  };
+  
+
+  useEffect(() => {
+    const savedBookmarks = localStorage.getItem('bookmarks');
+    if (savedBookmarks) {
+      setBookmarks(JSON.parse(savedBookmarks));
+    }
+
+    getCertificationsTable();
+  }, []);
+
+  useEffect(() => {
+    if (searching) {
+      search();
+      setSearching(false);
+    }
+  }, [searchTerm]);
+
   return (
     <div className="tablecomponent-container">
-      <div className="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th></th>
-              <th>ID</th>
-              <th>Org</th>
-              <th>Work Location</th>
-              <th>Certification</th>
-              <th>Issue Date</th>
-              <th>Type</th>
-            </tr>
-          </thead>
-          <tbody>
-            {certifications.slice(startIndex, endIndex).map(({ id, org, work_location, certification, issue_date, type }) => (
-              <tr key={id} onClick={() => handleRowClick(id)}>
-                <td>
-                  <span onClick={(event) => handleBookmarkClick(event, id, certification)}>
-                    {bookmarks[`${id}-${certification}`] ? (
-                      <BookmarkFilled size="20" fill="#F1C21B" />
-                    ) : (
-                      <Bookmark size="20" />
-                    )}
-                  </span>
-                </td>
-                <td>{id}</td>
-                <td>{org}</td>
-                <td>{work_location}</td>
-                <td>{certification}</td>
-                <td>{issue_date}</td>
-                <td>{type}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div className="search-container">
+        <button
+          type="button"
+          className="search-button"
+          onClick={() => setSearching(true)}
+        >
+          <Search className="search-icon" />
+        </button>
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={handleInputChange}
+          placeholder="Search employee or certification"
+          className="search-input"
+        />
+        <div className="search-line"></div>
       </div>
+      {searching && <p>Searching...</p>}
+      {!searching && (
+        <div className="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th></th>
+                <th>ID</th>
+                <th>Org</th>
+                <th>Work Location</th>
+                <th>Certification</th>
+                <th>Issue Date</th>
+                <th>Type</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredData.slice(startIndex, endIndex).map(({ id, org, work_location, certification, issue_date, type }) => (
+                <tr key={id} onClick={() => handleRowClick(id)}>
+                  <td>
+                    <span onClick={(event) => handleBookmarkClick(event, id, certification)}>
+                      {bookmarks[`${id}-${certification}`] ? (
+                        <BookmarkFilled size="20" fill="#F1C21B" />
+                      ) : (
+                        <Bookmark size="20" />
+                      )}
+                    </span>
+                  </td>
+                  <td>{id}</td>
+                  <td>{org}</td>
+                  <td>{work_location}</td>
+                  <td>{certification}</td>
+                  <td>{issue_date}</td>
+                  <td>{type}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
       <div className="pagination">
         <div className="page-info">
-          Page {currentPage} of {totalPages} pages | Showing {startIndex + 1}-{endIndex} of {certifications.length} IDs
+          Page {currentPage} of {totalPages} pages | Showing {startIndex + 1}-{endIndex} of {filteredData.length} IDs
         </div>
         <div className="page-dropdown">
           <select value={currentPage} onChange={(e) => handlePageChange(parseInt(e.target.value))}>
@@ -166,7 +223,7 @@ const TableComponent = ({ urlCert }) => {
             <option value="10">10 items per page</option>
             <option value="50">50 items per page</option>
             <option value="100">100 items per page</option>
-            <option value={certifications.length}>All items</option>
+            <option value={filteredData.length}>All items</option>
           </select>
         </div>
         <div className="page-arrows">
