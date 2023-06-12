@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, ThemeProvider, createTheme } from '@mui/system';
 
 const theme = createTheme({
@@ -19,7 +19,18 @@ const theme = createTheme({
   },
 });
 
-export default function Example() {
+export default function Example({ jsonData }) {
+  const certification = jsonData.certification;
+  const cantidad = jsonData.cantidad;
+
+
+  const [randomNumber, setRandomNumber] = useState(0);
+
+  useEffect(() => {
+    const randomNumber = Math.random() * 10; 
+    setRandomNumber(randomNumber.toFixed(2));
+  }, []); 
+
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -33,9 +44,9 @@ export default function Example() {
           margin: 4
         }}
       >
-        <Box sx={{ color: 'text.secondary' }}>Certification A</Box>
+        <Box sx={{ color: 'text.secondary' }}>{certification}</Box>
         <Box sx={{ color: 'text.primary', fontSize: 34, fontWeight: 'medium' }}>
-          #####
+        {cantidad}
         </Box>
         <Box
           sx={{
@@ -46,7 +57,7 @@ export default function Example() {
             fontSize: 14,
           }}
         >
-          +18.77%
+          {`+${randomNumber}%`}
         </Box>
         <Box sx={{ color: 'text.secondary', display: 'inline', fontSize: 14 }}>
           vs. last comparison

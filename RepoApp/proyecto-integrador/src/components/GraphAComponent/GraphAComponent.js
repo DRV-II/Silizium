@@ -5,13 +5,14 @@ import './GraphAComponent.css'
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const GraphAComponent = () => {
-  // Data for the chart
+const GraphAComponent = ({ jsonData }) => {
+  const slicedData = jsonData.slice(0, 6); // Slice the array to get the first 6 items
+
   const data = {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Light-blue'],
+    labels: slicedData.map(item => item.certification),
     datasets: [
       {
-        data: [12, 19, 3, 5, 2, 3],
+        data: slicedData.map(item => item.cantidad),
         backgroundColor: [
           '#da1e28',
           '#0f62fe',
@@ -41,5 +42,4 @@ const GraphAComponent = () => {
     </div>
   );
 };
-
 export default GraphAComponent;

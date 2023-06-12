@@ -35,15 +35,15 @@ const Inicio = () => {
       <div className="right-side-inicio">
         <h1 className="titulo-inicio">Welcome</h1>
         <div className="right-side-inicio-top">
-          <GraphAComponent/>
-          <GraphBComponent/>
+          <GraphAComponent jsonData = {data} />
+          <GraphBComponent jsonData = {data}/>
         </div>
         <br></br>
         <div className="right-side-inicio-bot">
-          <CardComponent/>
-          <CardComponent/>
-          <CardComponent/>
-          <CardComponent/>
+          <CardComponent jsonData = {data[0]}/>
+          <CardComponent jsonData = {data[1]}/>
+          <CardComponent jsonData = {data[2]}/>
+          <CardComponent jsonData = {data[3]}/>
         </div>
       </div>
     </div>

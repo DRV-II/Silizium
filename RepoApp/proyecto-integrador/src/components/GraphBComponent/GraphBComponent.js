@@ -11,6 +11,9 @@ import {
 import { Bar } from 'react-chartjs-2';
 import './GraphBComponent.css'
 
+
+export default function GraphBComponent({ jsonData }) {
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -20,7 +23,7 @@ ChartJS.register(
   Legend
 );
 
-export const options = {
+const options = {
   indexAxis: 'y',
   elements: {
     bar: {
@@ -40,30 +43,33 @@ export const options = {
 
 const labels = [''];
 
-export const data = {
+const certs = jsonData.map(item => item.certification);
+const amount = jsonData.map(item => item.cantidad);
+
+const data = {
   labels,
   datasets: [
     {
-      label: 'Cert A',
-      data: [10],
+      label: certs[4],
+      data: [amount[4]],
       borderColor: '#f1c21b',
       backgroundColor: '#f1c21b',
     },
     {
-      label: 'Cert B',
-      data: [30],
+      label: certs[6],
+      data: [amount[6]],
       borderColor: '#0f62fe',
       backgroundColor: '#0f62fe',
     },
     {
-      label: 'Cert C',
-      data: [20],
+      label: certs[16],
+      data: [amount[16]],
       borderColor: '#78a9ff',
       backgroundColor: '#78a9ff',
     },
     {
-      label: 'Cert D',
-      data: [25],
+      label: certs[23],
+      data: [amount[23]],
       borderColor: '#da1e28',
       backgroundColor: '#da1e28',
     },
@@ -71,11 +77,11 @@ export const data = {
   ],
 };
 
-export default function GraphBComponent() {
+
   return (
     <div className="GraphBContainer">
       <div className="GraphBTitle">
-       <h2>Certification Category</h2> 
+       <h2>Cloud Speciality</h2> 
       </div>
       <Bar options={options} data={data} />
     </div>
