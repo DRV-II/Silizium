@@ -1,6 +1,6 @@
 import React from 'react';
 import './Sidebar.css';
-import { Bee, Home, Policy, TableOfContents, Logout } from '@carbon/icons-react';
+import { Bee, Home, Policy, TableOfContents } from '@carbon/icons-react';
 import { NavLink } from 'react-router-dom';
 import LogOut from '../Logout/Logout';
 
