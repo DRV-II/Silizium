@@ -12,27 +12,27 @@ const Sidebar = () => {
       </div>
       <div className='linea'></div>
       <div>
-        <NavLink to='/Home' activeClassName='active'>
+        <NavLink to='/Home' activeclassname='active'>
           <Home size='56' className='home' />
         </NavLink>
       </div>
       <div>
-        <NavLink to='/Certifications' activeClassName='active'>
+        <NavLink to='/Certifications' activeclassname='active'>
           <Policy size='56' className='policy' />
         </NavLink>
       </div>
       <div className='table-container1'>
-        <NavLink to='/Bookmark' activeClassName='active'>
+        <NavLink to='/Bookmark' activeclassname='active'>
           <TableOfContents size='56' className='table1' />
         </NavLink>
       </div>
       <div>
-        <NavLink to='/Profile' activeClassName='active'>
+        <NavLink to='/Profile' activeclassname='active'>
           <User size='56' className='profile' />
         </NavLink>
       </div>
       <div>
-          <NavLink to='/' activeClassName='active'>
+          <NavLink to='/' activeclassname='active'>
             <LogOut/>
           </NavLink> 
       </div>

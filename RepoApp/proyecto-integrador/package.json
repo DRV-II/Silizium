@@ -2,6 +2,7 @@
   "name": "proyecto-integrador",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://LeonardoLuna9.github.io/",
   "dependencies": {
     "@canvasjs/react-charts": "^1.0.0",
     "@carbon/ibmdotcom-styles": "^1.46.0",
