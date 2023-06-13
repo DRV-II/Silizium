@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import './QR.css';
 import QRCode from 'qrcode.react';
 import axios from 'axios';
@@ -37,6 +38,9 @@ const QR = () => {
       <div>
         <p className='texto1QR'> Or enter this text in an authenticator app</p>
         <p className="claveQR">{secret}</p>
+        <NavLink to='/TokenPage2' activeClassName='active'>
+          <a className="button-token">Next</a>
+        </NavLink>
       </div>
       <div className="rectangulo"></div>
     </div>

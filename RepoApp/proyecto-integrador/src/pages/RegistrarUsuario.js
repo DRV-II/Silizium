@@ -14,7 +14,7 @@ const RegistrarUsuario = () => {
           <input type="password" name="password" id="password" className="password" placeholder="  Password" />
           <label htmlFor="confirm-password"></label>
           <input type="password" name="confirm-password" id="confirm-password" className="confirm-password" placeholder="  Confirm your password" />
-          <button type="submit" className="button">Register</button>
+          <button type="submit" className="button-ru">Register</button>
         </form>
       </div>
 

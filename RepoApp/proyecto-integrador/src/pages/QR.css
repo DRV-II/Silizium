@@ -61,3 +61,24 @@
     color: #FFFFFF;
     margin-left: -30vw;
 }
+
+.button-token{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.13vw;
+    width: 5vw;
+    height: 5vh;
+    color: white;
+    padding-top: 1.4vw;
+    padding-left: 2.3vw;
+    background: #0F62FE;
+    border: #0F62FE;
+    margin-top: 3vw;
+    margin-left: 2vw;
+    border-radius: 5%;
+}
+
+a[href] {
+    text-decoration: none;
+  }

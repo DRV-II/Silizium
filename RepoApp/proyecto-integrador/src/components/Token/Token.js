@@ -12,7 +12,7 @@ const Token = (props) => {
             <label htmlFor="credentials"></label>
             <input type="text" name="token" id="login" className="token1" placeholder="  Token"/><br></br>
             <div>
-            <button type="submit" className="buttonT">Send</button>
+            <button type="submit" className="buttonT">Confirm</button>
             </div>
         </form>
     </div>
