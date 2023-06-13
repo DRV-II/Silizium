@@ -30,14 +30,14 @@ const { encryptPassword, matchPassword } = require('./lib/helpers');
 
 const app = express();
 const port = 5000;
-const homePage = "http://localhost:3000";
+const homePage = "https://frabjous-cucurucho-b15683.netlify.app/Home";
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.PARSER_SECRET));
 
 app.use(cors({
-    origin: "http://localhost:3000",
+    origin: "https://frabjous-cucurucho-b15683.netlify.app",
     credentials: true
 }));
 
