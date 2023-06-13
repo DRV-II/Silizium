@@ -5,7 +5,7 @@ require('dotenv').config();
 // ---------------
 //const pool = mysql.createPool(database);
 const pool = mysql.createPool({
-    host: process.env.MYSQL_HOST || "localhost",
+    host: process.env.MYSQL_HOST || "127.0.0.1",
     user: process.env.MYSQL_USER || "dash",
     password: process.env.MYSQL_PASSWORD || "Password123#",
     database: process.env.MYSQL_DATABASE || "ibm_dashboard"
