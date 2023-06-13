@@ -1,16 +1,14 @@
 const mysql = require('mysql2');
-const {promisify} = require('util');
 require('dotenv').config();
 
-// ---------------
-//const pool = mysql.createPool(database);
 const pool = mysql.createPool({
     host: process.env.MYSQL_HOST || "127.0.0.1",
     user: process.env.MYSQL_USER || "dash",
     password: process.env.MYSQL_PASSWORD || "Password123#",
     database: process.env.MYSQL_DATABASE || "ibm_dashboard"
-});
+}).promise();
 
+/*
 pool.getConnection((err, connection) => {
     if (err) {
         if (err.code === "PROTOCOL_COONECTION_LOST") {
@@ -30,11 +28,7 @@ pool.getConnection((err, connection) => {
         return;
     }
 })
-
-// Create promises from callbacks
-pool.query = promisify(pool.query);
-// -----------
-
+*/
 
 // Get users
 async function getUsers() {

@@ -60,7 +60,7 @@ passport.use(new passportLocal(
             getUser(username).then(async (user) => {
                 if(user){
                     if(user.role === process.env.USER_DELETED){
-                        console.log("User not found");
+                        console.log("User inactive");
                         return done(null, false);
                     }
                     const validPassword = await matchPassword(password, user.password);
@@ -69,7 +69,7 @@ passport.use(new passportLocal(
                         return done(null, user);
                     }
                 }
-                console.log("User not found");
+                console.log("User not found 1");
                 return done(null, false);
             });
         }
