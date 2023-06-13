@@ -11,7 +11,7 @@ const QR = () => {
     axios({
       method: "POST",
       withCredentials: true,
-      url: "https://edgarc.me/tfsetup",
+      url: "https://drv-ii.me/tfsetup",
     }).then((res) => {
       setData(res.data);
       console.log(res.data);
@@ -38,7 +38,7 @@ const QR = () => {
       <div>
         <p className='texto1QR'> Or enter this text in an authenticator app</p>
         <p className="claveQR">{secret}</p>
-        <NavLink to='/TokenPage2' activeClassName='active'>
+        <NavLink to='/TokenPage2' activeclassname='active'>
           <a className="button-token">Next</a>
         </NavLink>
       </div>

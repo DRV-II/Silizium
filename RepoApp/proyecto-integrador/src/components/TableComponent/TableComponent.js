@@ -38,7 +38,7 @@ const TableComponent = ({ urlCert }) => {
         certificate: certification,
       },
       withCredentials: true,
-      url: 'https://edgarc.me/check',
+      url: 'https://drv-ii.me/check',
     })
       .then((res) => {
         console.log(res.data);
@@ -56,7 +56,7 @@ const TableComponent = ({ urlCert }) => {
         certificate: certification,
       },
       withCredentials: true,
-      url: 'https://edgarc.me/unbook',
+      url: 'https://drv-ii.me/unbook',
     })
       .then((res) => {
         console.log(res.data);
