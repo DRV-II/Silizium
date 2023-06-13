@@ -1,12 +1,39 @@
 const mysql = require('mysql2');
 require('dotenv').config();
 
+// ---------------
+//const pool = mysql.createPool(database);
 const pool = mysql.createPool({
-    host: process.env.MYSQL_HOST,
-    user: process.env.MYSQL_USER,
-    password: process.env.MYSQL_PASSWORD,
-    database: process.env.MYSQL_DATABASE
-}).promise();
+    host: process.env.MYSQL_HOST || "localhost",
+    user: process.env.MYSQL_USER || "dash",
+    password: process.env.MYSQL_PASSWORD || "Password123#",
+    database: process.env.MYSQL_DATABASE || "ibm_dashboard"
+});
+
+pool.getConnection((err, connection) => {
+    if (err) {
+        if (err.code === "PROTOCOL_COONECTION_LOST") {
+            console.error('DATABASE CONNECTION WAS CLOSED', err);
+        }
+        if (err.code === "ER_CON_COUNT_ERROR") {
+            console.error("DATABASE HAS TO MANY CONNECTIONS", err);
+        }
+        if (err.code = "ECONNREFUSED") {
+            console.error('DATABASE CONNECTION WAS REFUSED', err);
+        }
+    }
+
+    else {
+        if (connection) connection.release();
+        console.log("DB is Connected");
+        return;
+    }
+})
+
+// Create promises from callbacks
+pool.query = promisify(pool.query);
+// -----------
+
 
 // Get users
 async function getUsers() {
