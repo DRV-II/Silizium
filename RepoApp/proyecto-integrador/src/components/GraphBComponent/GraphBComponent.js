@@ -35,6 +35,7 @@ const options = {
     legend: {
       position: 'bottom',
       align: 'start',
+      maxWidth: 100,
     },
     backgroundColor: {
       color: '#FFFFFF',

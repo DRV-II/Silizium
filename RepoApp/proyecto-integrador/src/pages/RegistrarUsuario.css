@@ -16,8 +16,8 @@
   @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap');
 
   .title {
-        position: relative;
-        z-index: 1; /* Mantener al frente */
+      position: relative;
+      z-index: 1; /* Mantener al frente */
       font-family: 'IBM Plex Sans', sans-serif;
       font-style: normal;
       font-weight: 3.5vw;
@@ -37,7 +37,7 @@
       background: #393939;
       border: 2px solid #FFFFFF;
       margin-top: 17vw;
-      margin-left: -25vw;
+      margin-left: -22vw;
   }
   
   .password {
@@ -48,7 +48,7 @@
       height: 6.7vh;
       background: #393939;
       border: 2px solid #FFFFFF;
-      margin-left: -25vw;
+      margin-left: -22vw;
       margin-top: 2vw;
   }
 
@@ -61,7 +61,7 @@
     background: #393939;
     border: 2px solid #FFFFFF;
     margin-top: 3vw;
-    margin-left: -25vw;
+    margin-left: -22vw;
 }
   
   .button-ru{

@@ -46,6 +46,7 @@ const GraphAComponent = ({ jsonData }) => {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-start',
+    maxWidth: 100,
   };
   return (
     <div className="GraphA-container">
