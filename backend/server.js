@@ -30,14 +30,14 @@ const { encryptPassword, matchPassword } = require('./lib/helpers');
 
 const app = express();
 const port = 5000;
-const homePage = "https://edgarc.me/app2/Home";
+const homePage = "https://edgarc.me/Home";
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.PARSER_SECRET));
 
 app.use(cors({
-    origin: "https://edgarc.me/app2/",
+    origin: "https://edgarc.me/",
     credentials: true
 }));
 
