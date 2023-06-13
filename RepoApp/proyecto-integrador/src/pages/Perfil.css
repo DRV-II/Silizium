@@ -59,14 +59,14 @@
 
 .title-a{
     color: #0f62fe;
-    margin-left: 5vw;
+    margin-left: 3vw;
     font-size: 21px;
 }
 
 .authentification-icon{
     color: black;
     margin-top: 8vw;
-    margin-left: -7.5vw;
+    margin-left: -9vw;
 }
 
 .button-A{
@@ -105,13 +105,13 @@
 
 .title-r{
     color: #0f62fe;
-    margin-left: 6vw;
+    margin-left: 5vw;
     font-size: 21px;
 }
 .registration-icon{
     color: black;
     margin-top: 8vw;
-    margin-left: -6vw;
+    margin-left: -7.5vw;
 }
 
 .button-R{
@@ -127,21 +127,21 @@
     background: #0F62FE;
     border: #0F62FE;
     margin-top: 3vw;
-    margin-left: -9vw;
+    margin-left: -10vw;
     border-radius: 5%;
 }
 
 
 .title-d{
     color: #0f62fe;
-    margin-left: 6.5vw;
+    margin-left: 5.5vw;
     font-size: 21px;
 }
 
 .deactivate-icon{
     color: black;
     margin-top: 8vw;
-    margin-left: -6vw;
+    margin-left: -7.5vw;
 }
 
 .button-D{
@@ -157,7 +157,7 @@
     background: #0F62FE;
     border: #0F62FE;
     margin-top: 3vw;
-    margin-left: -8.5vw;
+    margin-left: -9vw;
     border-radius: 5%;
 }
 

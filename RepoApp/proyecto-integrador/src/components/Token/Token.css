@@ -21,8 +21,8 @@
     height: 6.7vh;
     background: #393939;
     border: 2px solid #FFFFFF;
-    margin-top: 17vw;
-    margin-left: -16.5vw;
+    margin-top: 1vw;
+    margin-left: -20.5vw;
 }
 
 .buttonT{
@@ -38,7 +38,7 @@
     background: #0F62FE;
     border: #0F62FE;
     margin-top: 3vw;
-    margin-left: 2vw;
+    margin-left: 0vw;
     border-radius: 5%;
 }
 

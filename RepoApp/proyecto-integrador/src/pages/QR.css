@@ -41,8 +41,8 @@
 }
 
 .QR{
-    margin-top: 15vw;
-    margin-left: -20vw;
+    margin-top: 13vw;
+    margin-left: -25vw;
 }
 
 .claveQR{
@@ -50,16 +50,16 @@
     font-style: normal;
     font-size: 15px;
     color: #8D8D8D;
-    margin-left: -30vw;
+    margin-left: -32vw;
 }
 
 .texto1QR {
     font-family: 'IBM Plex Sans', sans-serif;
     font-style: normal;
     font-size: 20px;
-    margin-top: 34vw;
+    margin-top: 32vw;
     color: #FFFFFF;
-    margin-left: -21vw;
+    margin-left: -24vw;
 }
 
 .button-token{
@@ -74,7 +74,7 @@
     padding-left: 3.3vw;
     background: #0F62FE;
     border: #0F62FE;
-    margin-top: 8vw;
+    margin-top: -1vw;
     margin-left: -1vw;
     border-radius: 5%;
 }
