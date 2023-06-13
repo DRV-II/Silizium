@@ -122,7 +122,7 @@ const TableComponent = ({ urlCert }) => {
           certification.work_location.toLowerCase().includes(term) ||
           certification.org.toLowerCase().includes(term) ||
           certification.type.toLowerCase().includes(term) ||
-          certification.issue_date.toLowerCase().includes(term)
+          (certification.issue_date && certification.issue_date.toLowerCase().includes(term))
         );
       })
     );
