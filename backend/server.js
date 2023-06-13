@@ -44,7 +44,10 @@ app.use(cors({
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: {
+        sameSite: 'strict' // Set SameSite to 'Strict'
+    }
 }));
 
 // =================================================
