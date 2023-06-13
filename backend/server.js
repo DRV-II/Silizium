@@ -46,7 +46,7 @@ app.use(session({
     resave: true,
     saveUninitialized: true,
     cookie: {
-        sameSite: 'strict' // Set SameSite to 'Strict'
+        sameSite: 'none' // Set SameSite to 'Strict'
     }
 }));
 
