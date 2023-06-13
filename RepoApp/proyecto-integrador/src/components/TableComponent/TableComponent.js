@@ -73,7 +73,7 @@ const TableComponent = ({ urlCert }) => {
   };
 
   const handleRowClick = (id) => {
-    navigate(`/Empleado/${id}`);
+    navigate(`/Employee/${id}`);
   };
 
   const handleBookmarkClick = (event, id, certification) => {

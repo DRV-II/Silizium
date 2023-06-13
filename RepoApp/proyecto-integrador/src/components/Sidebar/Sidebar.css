@@ -25,6 +25,12 @@
     margin-top: 60px;
 }
 
+.profile {
+    color: #8D8D8D;
+    margin-left: 2.5vw;
+    margin-top: 70px;
+}
+
 .table1 {
     color: #8D8D8D;
     margin-left: 2.5vw;
@@ -33,8 +39,8 @@
 
 .logout {
     color: #8D8D8D;
-    margin-left: 2.5vw;
-    margin-top: 280px;
+    margin-left: 3vw;
+    margin-top: 150px;
 }
 
 .container-sidebar {

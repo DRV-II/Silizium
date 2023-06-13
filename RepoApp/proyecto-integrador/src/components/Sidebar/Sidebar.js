@@ -1,6 +1,6 @@
 import React from 'react';
 import './Sidebar.css';
-import { Bee, Home, Policy, TableOfContents } from '@carbon/icons-react';
+import { Bee, Home, Policy, TableOfContents, User} from '@carbon/icons-react';
 import { NavLink } from 'react-router-dom';
 import LogOut from '../Logout/Logout';
 
@@ -12,12 +12,12 @@ const Sidebar = () => {
       </div>
       <div className='linea'></div>
       <div>
-        <NavLink to='/Inicio' activeClassName='active'>
+        <NavLink to='/Home' activeClassName='active'>
           <Home size='56' className='home' />
         </NavLink>
       </div>
       <div>
-        <NavLink to='/' activeClassName='active'>
+        <NavLink to='/Certifications' activeClassName='active'>
           <Policy size='56' className='policy' />
         </NavLink>
       </div>
@@ -27,7 +27,12 @@ const Sidebar = () => {
         </NavLink>
       </div>
       <div>
-          <NavLink to='/LoginPage' activeClassName='active'>
+        <NavLink to='/Profile' activeClassName='active'>
+          <User size='56' className='profile' />
+        </NavLink>
+      </div>
+      <div>
+          <NavLink to='/' activeClassName='active'>
             <LogOut/>
           </NavLink> 
       </div>

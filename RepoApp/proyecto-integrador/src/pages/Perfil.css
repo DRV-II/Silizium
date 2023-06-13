@@ -1,0 +1,151 @@
+.perfil-container{
+    background-color: #262626;
+    position: relative;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+.right-side-perfil{
+    width: 80vw;
+    max-width: 80vw;
+    display: flex;
+  }
+
+.left-side-perfil{
+    display: flex;
+    width: 8vw;
+}
+
+.title-profile{
+    width: 55.625vw;
+    height: 6px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-style: normal;
+    font-weight: 3.5vw;
+    font-size: 45px;
+    line-height: 3.5vw;
+    margin-top: -53vw;
+    color: #FFFFFF;
+    margin-left: 15vw;
+    z-index: 1;
+}
+
+.authentification{
+    width: 35%;
+    height: 40vh;
+    background: #f4f4f4;
+    margin-top: -70vh;
+    margin-left: -8vw;
+    display: flex;
+}
+
+.authentification-2{
+    width: 35%;
+    height: 40vh;
+    background: #f4f4f4;
+    margin-top: -40vh;
+    margin-left: 20vw;
+    display: flex;
+}
+
+.authentification-3{
+    width: 35%;
+    height: 40vh;
+    background: #f4f4f4;
+    margin-top: -40vh;
+    margin-left: 48vw;
+    display: flex;
+}
+
+.title-a{
+    color: #0f62fe;
+    margin-left: 3vw;
+}
+
+.authentification-icon{
+    color: black;
+    margin-top: 8vw;
+    margin-left: -10.5vw;
+}
+
+.button-A{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.13vw;
+    width: 5vw;
+    height: 6.7vh;
+    color: white;
+    padding-top: 1.4vw;
+    padding-left: 1.8vw;
+    background: #0F62FE;
+    border: #0F62FE;
+    margin-top: 3vw;
+    margin-left: -10.5vw;
+    border-radius: 5%;
+    text-decoration: none;
+}
+
+.title-r{
+    color: #0f62fe;
+    margin-left: 4.5vw;
+    font-size: 21px;
+}
+.registration-icon{
+    color: black;
+    margin-top: 8vw;
+    margin-left: -8vw;
+}
+
+.button-R{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.13vw;
+    width: 5vw;
+    height: 6.7vh;
+    color: white;
+    padding-top: 1.4vw;
+    padding-left: 1.8vw;
+    background: #0F62FE;
+    border: #0F62FE;
+    margin-top: 3vw;
+    margin-left: -8.3vw;
+    border-radius: 5%;
+    text-decoration: none;
+}
+
+
+.title-d{
+    color: #0f62fe;
+    margin-left: 5.5vw;
+    font-size: 21px;
+}
+
+.deactivate-icon{
+    color: black;
+    margin-top: 8vw;
+    margin-left: -8vw;
+}
+
+.button-D{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.13vw;
+    width: 5vw;
+    height: 7vh;
+    color: white;
+    padding-top: 1.4vw;
+    padding-left: 1.8vw;
+    background: #0F62FE;
+    border: #0F62FE;
+    margin-top: 3vw;
+    margin-left: -7.5vw;
+    border-radius: 5%;
+    text-decoration: none;
+}
+
+button{
+    text-decoration: none;
+}

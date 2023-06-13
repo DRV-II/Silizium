@@ -11,22 +11,24 @@ import TokenPage2 from './pages/TokenPage2';
 import RegistrarUsuario from './pages/RegistrarUsuario';
 import DesactivarUsuario from './pages/DesactivarUsuario';
 import BookmarkPage from './pages/Bookmark';
+import Perfil from './pages/Perfil';
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/LoginPage" element={<LoginPage/>} />
-          <Route path="/Inicio" element={<Inicio/>} />
-          <Route path="/" element={<Certificados/>} />
+          <Route path="/" element={<LoginPage/>} />
+          <Route path="/Home" element={<Inicio/>} />
+          <Route path="/Certifications" element={<Certificados/>} />
           <Route path="/Bookmark" element={<BookmarkPage/>} />
-          <Route path="/Empleado/:id" element={<EmpleadoPage/>} />
+          <Route path="/Employee/:id" element={<EmpleadoPage/>} />
           <Route path="/QR" element={<QR/>} />
           <Route path="/TokenPage" element={<TokenPage/>} />
           <Route path="/TokenPage2" element={<TokenPage2/>} />
           <Route path="/UserRegistration" element={<RegistrarUsuario/>} />
           <Route path="/DeactivateUser" element={<DesactivarUsuario/>} />
+          <Route path="/Profile" element={<Perfil/>} />
         </Routes>
       </BrowserRouter>
     </div>
