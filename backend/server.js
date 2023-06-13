@@ -37,14 +37,18 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.PARSER_SECRET));
 
 app.use(cors({
-    origin: "https://edgarc.me",
+    origin: "*",
     credentials: true
 }));
 
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: {
+        secure: true,
+        sameSite: 'none'
+    }
 }));
 
 // =================================================
