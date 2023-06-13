@@ -37,7 +37,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.PARSER_SECRET));
 
 app.use(cors({
-    origin: "*",
+    origin: "https://frabjous-cucurucho-b15683.netlify.app",
     credentials: true
 }));
 
