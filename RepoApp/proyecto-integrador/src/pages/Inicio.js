@@ -13,7 +13,7 @@ const Inicio = () => {
     axios({
       method: 'GET',
       withCredentials: true,
-      url: 'http://localhost:5000/getcerdata',
+      url: 'https://drv-ii.me/getcerdata',
     })
       .then((res) => {
         setData(res.data);

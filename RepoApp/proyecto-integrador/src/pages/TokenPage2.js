@@ -4,7 +4,7 @@ import Token from '../components/Token/Token';
 const TokenPage2 = () => {
   return (
     <div className='token-container'>
-          <Token urlEnd='http://localhost:5000/verify'/>
+          <Token urlEnd='https://drv-ii.me/verify'/>
       <div className="rectangulo"></div>
     </div>
   );
