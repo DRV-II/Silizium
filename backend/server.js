@@ -30,14 +30,14 @@ const { encryptPassword, matchPassword } = require('./lib/helpers');
 
 const app = express();
 const port = 5000;
-const homePage = "http://localhost:3000/";
+const homePage = "https://frabjous-cucurucho-b15683.netlify.app/Home";
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.PARSER_SECRET));
 
 app.use(cors({
-    origin: "http://localhost:3000/",
+    origin: "*",
     credentials: true
 }));
 
@@ -60,7 +60,7 @@ passport.use(new passportLocal(
             getUser(username).then(async (user) => {
                 if(user){
                     if(user.role === process.env.USER_DELETED){
-                        console.log("User inactive");
+                        console.log("User not found");
                         return done(null, false);
                     }
                     const validPassword = await matchPassword(password, user.password);
@@ -69,7 +69,7 @@ passport.use(new passportLocal(
                         return done(null, user);
                     }
                 }
-                console.log("User not found 1");
+                console.log("User not found");
                 return done(null, false);
             });
         }
