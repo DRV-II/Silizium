@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/Silizium/static/css/main.dd4320de.css",
+    "main.js": "/Silizium/static/js/main.318c8e3d.js",
+    "static/js/787.51a3f71a.chunk.js": "/Silizium/static/js/787.51a3f71a.chunk.js",
+    "index.html": "/Silizium/index.html",
+    "main.dd4320de.css.map": "/Silizium/static/css/main.dd4320de.css.map",
+    "main.318c8e3d.js.map": "/Silizium/static/js/main.318c8e3d.js.map",
+    "787.51a3f71a.chunk.js.map": "/Silizium/static/js/787.51a3f71a.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.dd4320de.css",
+    "static/js/main.318c8e3d.js"
+  ]
+}
