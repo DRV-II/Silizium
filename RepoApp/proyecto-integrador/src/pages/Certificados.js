@@ -18,7 +18,7 @@ const Certificados = () => {
           <div>   
           </div>
         </div>
-        <TableComponent urlCert="https://drv-ii.me/general"/>  
+        <TableComponent urlCert="http://localhost:5000/general"/>  
         </div>
       </div>
     </div>

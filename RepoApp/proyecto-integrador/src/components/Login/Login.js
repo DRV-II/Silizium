@@ -4,7 +4,7 @@ import './Login.css';
 const Login = () => {
   return (
     <div>
-      <form action='https://drv-ii.me/login' method='POST'>
+      <form action='http://localhost:5000/login' method='POST'>
         <h5 className="Login">Log In</h5>
         <label htmlFor="credentials"></label>
         <input type="text" name="username" id="login" className="credentials" placeholder="  Credentials"/><br></br>
