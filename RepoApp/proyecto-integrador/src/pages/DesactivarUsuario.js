@@ -7,7 +7,7 @@ const DesactivarUsuario = () => {
     <h5 className="title">Deactivate User</h5>
       <div className="rectangulo-user"></div>
       <div className="form">
-        <form action='https://drv-ii.me/delete' method='POST'>
+        <form action='https://backend.edgarc.me/delete' method='POST'>
           <label htmlFor="id"></label>
           <input type="text" name="username" id="id" className="id" placeholder="  ID"/><br></br>
           <button type="submit" className="button">Deactivate</button>
