@@ -19,6 +19,7 @@ const TableComponent = ({ urlCert }) => {
       method: 'GET',
       withCredentials: true,
       url: urlCert,
+      credentials: "same-origin"
     })
       .then((res) => {
         setCertifications(res.data);
