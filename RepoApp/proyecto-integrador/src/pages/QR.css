@@ -50,31 +50,27 @@
     font-style: normal;
     font-size: 15px;
     color: #8D8D8D;
-    margin-left: -32vw;
+    margin-left: -31vw;
 }
 
 .texto1QR {
     font-family: 'IBM Plex Sans', sans-serif;
     font-style: normal;
     font-size: 20px;
-    margin-top: 33vw;
+    margin-top: 34vw;
     color: #FFFFFF;
-    margin-left: -25vw;
+    margin-left: -27.5vw;
 }
 
 .button-token{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 0.13vw;
-    width: 5vw;
-    height: 5vh;
     color: white;
-    padding-top: 1.4vw;
-    padding-left: 3.3vw;
+    padding: 2vh 3vh;
     background: #0F62FE;
     border: #0F62FE;
-    margin-top: 2vw;
+    margin-top: 3vw;
     margin-left: -1vw;
     border-radius: 5%;
 }

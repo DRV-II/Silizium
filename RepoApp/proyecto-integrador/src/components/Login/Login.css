@@ -39,12 +39,10 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 0.13vw;
+    padding: 1.2vw;
     width: 5vw;
     height: 6.7vh;
     color: white;
-    padding-top: 1.4vw;
-    padding-left: 1.2vw;
     background: #0F62FE;
     border: #0F62FE;
     margin-top: 3vw;

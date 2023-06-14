@@ -12,8 +12,7 @@
   }
 
 .left-side-perfil{
-    display: flex;
-    width: 8vw;
+    width: 12vw;
 }
 
 .title-profile{
@@ -24,7 +23,7 @@
     font-weight: 3.5vw;
     font-size: 45px;
     line-height: 3.5vw;
-    margin-top: -53vw;
+    margin-top: -51vw;
     color: #FFFFFF;
     margin-left: 15vw;
     z-index: 1;
@@ -34,7 +33,7 @@
     width: 35%;
     height: 45vh;
     background: #f4f4f4;
-    margin-top: -70vh;
+    margin-top: -80vh;
     margin-left: -8vw;
     display: flex;
 }
