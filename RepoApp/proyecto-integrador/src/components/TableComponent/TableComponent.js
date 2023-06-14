@@ -17,7 +17,7 @@ const TableComponent = ({ urlCert }) => {
   const getCertificationsTable = () => {
     axios({
       method: 'GET',
-      withCredentials: true,
+      withCredentials: false,
       url: urlCert,
     })
       .then((res) => {
