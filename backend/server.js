@@ -265,7 +265,7 @@ app.post("/verify", userLoggedIn, (req,res,next) => {
     res.status(200).send({response: "Ok"});
 });
 
-
+/*
 // Login
 app.post('/login', (req, res, next) => {
     if(req.isAuthenticated()){
@@ -278,6 +278,25 @@ app.post('/login', (req, res, next) => {
 function(req, res) {
   res.status(200).redirect(homePage); // We return Ok if we log in
 });
+*/
+
+// -----------
+
+app.post("/login", (req, res, next) => {
+    passport.authenticate("local", (err, user, info) => {
+      if (err) throw err;
+      if (!user) res.send("No User Exists");
+      else {
+        req.logIn(user, (err) => {
+          if (err) throw err;
+          res.send("Successfully Authenticated");
+          console.log(req.user);
+        });
+      }
+    })(req, res, next);
+  });
+
+// ---------
 
 // Logout
 app.post('/logout', (req, res, next) => {

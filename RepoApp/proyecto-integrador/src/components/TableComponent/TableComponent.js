@@ -5,7 +5,6 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const TableComponent = ({ urlCert }) => {
-  axios.defaults.withCredentials = true;
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
@@ -20,7 +19,6 @@ const TableComponent = ({ urlCert }) => {
       method: 'GET',
       withCredentials: true,
       url: urlCert,
-      credentials: "same-origin"
     })
       .then((res) => {
         setCertifications(res.data);
