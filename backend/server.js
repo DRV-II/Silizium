@@ -41,19 +41,18 @@ app.use(cors({
     credentials: true
 }));
 
-app.use(passport.initialize());
-
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: true,
-    saveUninitialized: false,
-    cookie: { secure: true }
+    saveUninitialized: true
 }));
-app.use(passport.session());
+
 // =================================================
 // Passport
 // ================================================================================
 
+app.use(passport.initialize());
+app.use(passport.session());
 
 passport.use(new passportLocal(
     function(username, password, done) {
@@ -81,39 +80,15 @@ passport.use(new passportLocal(
     }
 ));
 
-passport.serializeUser(function(user,done) {
-    process.nextTick(function() {
-        return done(null, user.uid);
-    });
+passport.serializeUser(function(user,done){
+    done(null, user.uid);
 });
 
-passport.deserializeUser(function(uid,done){
-    process.nextTick(async function() {
-        getUser(uid).then((user) => {
-            return done(null, user);
-        });
-    });  
+passport.deserializeUser(async function(uid,done){
+    getUser(uid).then((user) => {
+        done(null, user);
+    }); 
 });
-
-/*
-// ----------------------
-passport.serializeUser(function(user, cb) {
-    process.nextTick(function() {
-      return cb(null, {
-        id: user.id,
-        username: user.username,
-        picture: user.picture
-      });
-    });
-  });
-  
-  passport.deserializeUser(function(user, cb) {
-    process.nextTick(function() {
-      return cb(null, user);
-    });
-  });
-// ----------------------
-*/
 
 // =================================================
 // Auth middlewares
